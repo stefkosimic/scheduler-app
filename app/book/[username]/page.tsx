@@ -1,17 +1,28 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Calendar } from "@/components/ui/calendar"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Separator } from "@/components/ui/separator"
-import { Check } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Calendar } from "@/components/ui/calendar";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Separator } from "@/components/ui/separator";
+import { Check } from "lucide-react";
 
-export default function BookingPage({ params }: { params: { username: string } }) {
+export default function BookingPage({
+  params,
+}: {
+  params: { username: string };
+}) {
   // Mock data - would be fetched from database based on username
   const provider = {
     name: "John Doe",
@@ -34,28 +45,70 @@ export default function BookingPage({ params }: { params: { username: string } }
       },
     ],
     availability: [
-      { id: "1", day: "Monday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-      { id: "2", day: "Tuesday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-      { id: "3", day: "Wednesday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-      { id: "4", day: "Thursday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-      { id: "5", day: "Friday", enabled: true, startTime: "9:00 AM", endTime: "3:00 PM" },
-      { id: "6", day: "Saturday", enabled: false, startTime: "10:00 AM", endTime: "2:00 PM" },
-      { id: "7", day: "Sunday", enabled: false, startTime: "10:00 AM", endTime: "2:00 PM" },
+      {
+        id: "1",
+        day: "Monday",
+        enabled: true,
+        startTime: "9:00 AM",
+        endTime: "5:00 PM",
+      },
+      {
+        id: "2",
+        day: "Tuesday",
+        enabled: true,
+        startTime: "9:00 AM",
+        endTime: "5:00 PM",
+      },
+      {
+        id: "3",
+        day: "Wednesday",
+        enabled: true,
+        startTime: "9:00 AM",
+        endTime: "5:00 PM",
+      },
+      {
+        id: "4",
+        day: "Thursday",
+        enabled: true,
+        startTime: "9:00 AM",
+        endTime: "5:00 PM",
+      },
+      {
+        id: "5",
+        day: "Friday",
+        enabled: true,
+        startTime: "9:00 AM",
+        endTime: "3:00 PM",
+      },
+      {
+        id: "6",
+        day: "Saturday",
+        enabled: false,
+        startTime: "10:00 AM",
+        endTime: "2:00 PM",
+      },
+      {
+        id: "7",
+        day: "Sunday",
+        enabled: false,
+        startTime: "10:00 AM",
+        endTime: "2:00 PM",
+      },
     ],
-  }
+  };
 
-  const [step, setStep] = useState(1)
-  const [selectedService, setSelectedService] = useState("")
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined)
-  const [selectedTime, setSelectedTime] = useState("")
+  const [step, setStep] = useState(1);
+  const [selectedService, setSelectedService] = useState("");
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
+  const [selectedTime, setSelectedTime] = useState("");
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
     email: "",
     phone: "",
     notes: "",
-  })
-  
-  const [bookingComplete, setBookingComplete] = useState(false)
+  });
+
+  const [bookingComplete, setBookingComplete] = useState(false);
 
   // Mock available time slots - would be generated based on provider's availability and existing appointments
   const availableTimeSlots = [
@@ -73,32 +126,32 @@ export default function BookingPage({ params }: { params: { username: string } }
     "3:30 PM",
     "4:00 PM",
     "4:30 PM",
-  ]
+  ];
 
   const handleServiceSelect = (serviceId: string) => {
-    setSelectedService(serviceId)
-    setStep(2)
-  }
+    setSelectedService(serviceId);
+    setStep(2);
+  };
 
   const handleDateSelect = (date: Date | undefined) => {
-    setSelectedDate(date)
+    setSelectedDate(date);
     if (date) {
       // In a real app, we would fetch available time slots for this date
-      setStep(3)
+      setStep(3);
     }
-  }
+  };
 
   const handleTimeSelect = (time: string) => {
-    setSelectedTime(time)
-    setStep(4)
-  }
+    setSelectedTime(time);
+    setStep(4);
+  };
 
   const handleCustomerInfoChange = (field: string, value: string) => {
     setCustomerInfo({
       ...customerInfo,
       [field]: value,
-    })
-  }
+    });
+  };
 
   const handleBookAppointment = () => {
     // In a real app, we would submit the booking to the server
@@ -107,13 +160,13 @@ export default function BookingPage({ params }: { params: { username: string } }
       date: selectedDate,
       time: selectedTime,
       customer: customerInfo,
-    })
-    setBookingComplete(true)
-  }
+    });
+    setBookingComplete(true);
+  };
 
   const getSelectedServiceDetails = () => {
-    return provider.services.find((service) => service.id === selectedService)
-  }
+    return provider.services.find((service) => service.id === selectedService);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
@@ -153,7 +206,9 @@ export default function BookingPage({ params }: { params: { username: string } }
                             {day.startTime} - {day.endTime}
                           </span>
                         ) : (
-                          <span className="text-muted-foreground">Unavailable</span>
+                          <span className="text-muted-foreground">
+                            Unavailable
+                          </span>
                         )}
                       </div>
                     ))}
@@ -174,17 +229,31 @@ export default function BookingPage({ params }: { params: { username: string } }
               </CardHeader>
               <CardContent>
                 {step === 1 && (
-                  <RadioGroup value={selectedService} onValueChange={handleServiceSelect}>
+                  <RadioGroup
+                    value={selectedService}
+                    onValueChange={handleServiceSelect}
+                  >
                     <div className="space-y-4">
                       {provider.services.map((service) => (
-                        <div key={service.id} className="flex items-center space-x-2">
-                          <RadioGroupItem value={service.id} id={`service-${service.id}`} />
-                          <Label htmlFor={`service-${service.id}`} className="flex flex-col cursor-pointer">
+                        <div
+                          key={service.id}
+                          className="flex items-center space-x-2"
+                        >
+                          <RadioGroupItem
+                            value={service.id}
+                            id={`service-${service.id}`}
+                          />
+                          <Label
+                            htmlFor={`service-${service.id}`}
+                            className="flex flex-col cursor-pointer"
+                          >
                             <span className="font-medium">{service.name}</span>
                             <span className="text-sm text-muted-foreground">
                               {service.duration} min | ${service.price}
                             </span>
-                            <span className="text-sm">{service.description}</span>
+                            <span className="text-sm">
+                              {service.description}
+                            </span>
                           </Label>
                         </div>
                       ))}
@@ -203,12 +272,12 @@ export default function BookingPage({ params }: { params: { username: string } }
                         className="rounded-md border"
                         disabled={(date) => {
                           // Disable past dates and weekends in this example
-                          const day = date.getDay()
+                          const day = date.getDay();
                           return (
                             date < new Date() ||
                             day === 0 || // Sunday
                             day === 6 // Saturday
-                          )
+                          );
                         }}
                       />
                     </div>
@@ -216,7 +285,8 @@ export default function BookingPage({ params }: { params: { username: string } }
                       <div className="p-4 bg-muted rounded-lg">
                         <h3 className="font-medium">Selected Service</h3>
                         <div className="text-sm">
-                          {getSelectedServiceDetails()?.name} - {getSelectedServiceDetails()?.duration} min
+                          {getSelectedServiceDetails()?.name} -{" "}
+                          {getSelectedServiceDetails()?.duration} min
                         </div>
                       </div>
                     )}
@@ -234,7 +304,9 @@ export default function BookingPage({ params }: { params: { username: string } }
                         {availableTimeSlots.map((time) => (
                           <Button
                             key={time}
-                            variant={selectedTime === time ? "default" : "outline"}
+                            variant={
+                              selectedTime === time ? "default" : "outline"
+                            }
                             onClick={() => handleTimeSelect(time)}
                           >
                             {time}
@@ -246,7 +318,8 @@ export default function BookingPage({ params }: { params: { username: string } }
                       <h3 className="font-medium">Appointment Details</h3>
                       <div className="text-sm">
                         <div>
-                          {getSelectedServiceDetails()?.name} - {getSelectedServiceDetails()?.duration} min
+                          {getSelectedServiceDetails()?.name} -{" "}
+                          {getSelectedServiceDetails()?.duration} min
                         </div>
                         <div>
                           {selectedDate?.toLocaleDateString("en-US", {
@@ -269,7 +342,8 @@ export default function BookingPage({ params }: { params: { username: string } }
                       <h3 className="font-medium">Appointment Details</h3>
                       <div className="text-sm">
                         <div>
-                          {getSelectedServiceDetails()?.name} - {getSelectedServiceDetails()?.duration} min
+                          {getSelectedServiceDetails()?.name} -{" "}
+                          {getSelectedServiceDetails()?.duration} min
                         </div>
                         <div>
                           {selectedDate?.toLocaleDateString("en-US", {
@@ -288,7 +362,9 @@ export default function BookingPage({ params }: { params: { username: string } }
                           <Input
                             id="name"
                             value={customerInfo.name}
-                            onChange={(e) => handleCustomerInfoChange("name", e.target.value)}
+                            onChange={(e) =>
+                              handleCustomerInfoChange("name", e.target.value)
+                            }
                             required
                           />
                         </div>
@@ -298,7 +374,9 @@ export default function BookingPage({ params }: { params: { username: string } }
                             id="email"
                             type="email"
                             value={customerInfo.email}
-                            onChange={(e) => handleCustomerInfoChange("email", e.target.value)}
+                            onChange={(e) =>
+                              handleCustomerInfoChange("email", e.target.value)
+                            }
                             required
                           />
                         </div>
@@ -308,7 +386,9 @@ export default function BookingPage({ params }: { params: { username: string } }
                         <Input
                           id="phone"
                           value={customerInfo.phone}
-                          onChange={(e) => handleCustomerInfoChange("phone", e.target.value)}
+                          onChange={(e) =>
+                            handleCustomerInfoChange("phone", e.target.value)
+                          }
                         />
                       </div>
                       <div className="space-y-2">
@@ -317,15 +397,25 @@ export default function BookingPage({ params }: { params: { username: string } }
                           id="notes"
                           rows={3}
                           value={customerInfo.notes}
-                          onChange={(e) => handleCustomerInfoChange("notes", e.target.value)}
+                          onChange={(e) =>
+                            handleCustomerInfoChange("notes", e.target.value)
+                          }
                         />
                       </div>
                     </div>
-                    <div className="flex space-x-2">
-                      <Button variant="outline" onClick={() => setStep(3)}>
+                    <div className="flex flex-col-reverse md:flex-row gap-2">
+                      <Button
+                        className="w-full"
+                        variant="outline"
+                        onClick={() => setStep(3)}
+                      >
                         Back
                       </Button>
-                      <Button onClick={handleBookAppointment} disabled={!customerInfo.name || !customerInfo.email}>
+                      <Button
+                        className="w-full"
+                        onClick={handleBookAppointment}
+                        disabled={!customerInfo.name || !customerInfo.email}
+                      >
                         Book Appointment
                       </Button>
                     </div>
@@ -341,7 +431,9 @@ export default function BookingPage({ params }: { params: { username: string } }
                 <Check className="h-6 w-6 text-green-600" />
               </div>
               <CardTitle>Booking Confirmed!</CardTitle>
-              <CardDescription>Your appointment has been scheduled successfully</CardDescription>
+              <CardDescription>
+                Your appointment has been scheduled successfully
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="p-4 bg-muted rounded-lg space-y-2">
@@ -352,7 +444,11 @@ export default function BookingPage({ params }: { params: { username: string } }
                     <div>{getSelectedServiceDetails()?.name}</div>
                     <div className="font-medium">Date:</div>
                     <div>
-                      {selectedDate?.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}
+                      {selectedDate?.toLocaleDateString("en-US", {
+                        weekday: "long",
+                        month: "long",
+                        day: "numeric",
+                      })}
                     </div>
                     <div className="font-medium">Time:</div>
                     <div>{selectedTime}</div>
@@ -375,17 +471,23 @@ export default function BookingPage({ params }: { params: { username: string } }
                 </div>
               </div>
               <div className="text-center text-sm text-muted-foreground">
-                <p>A confirmation email has been sent to {customerInfo.email}</p>
-                <p>You can cancel or reschedule your appointment up to 24 hours before the scheduled time.</p>
+                <p>
+                  A confirmation email has been sent to {customerInfo.email}
+                </p>
+                <p>
+                  You can cancel or reschedule your appointment up to 24 hours
+                  before the scheduled time.
+                </p>
               </div>
             </CardContent>
             <CardFooter className="flex justify-center">
-              <Button onClick={() => window.location.reload()}>Book Another Appointment</Button>
+              <Button onClick={() => window.location.reload()}>
+                Book Another Appointment
+              </Button>
             </CardFooter>
           </Card>
         )}
       </div>
     </div>
-  )
+  );
 }
-

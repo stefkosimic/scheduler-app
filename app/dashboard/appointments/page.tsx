@@ -1,12 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Calendar } from "@/components/ui/calendar"
-import { Badge } from "@/components/ui/badge"
-import { Check, X } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Calendar } from "@/components/ui/calendar";
+import { Badge } from "@/components/ui/badge";
+import { Check, X } from "lucide-react";
 
 // Mock data - would be fetched from database
 const APPOINTMENTS = [
@@ -58,15 +64,21 @@ const APPOINTMENTS = [
     date: new Date(2025, 2, 12, 9, 0), // March 12, 2025, 9:00 AM
     status: "cancelled",
   },
-]
+];
 
 export default function AppointmentsPage() {
-  const [date, setDate] = useState<Date | undefined>(new Date())
-  const [appointments, setAppointments] = useState(APPOINTMENTS)
+  const [date, setDate] = useState<Date | undefined>(new Date());
+  const [appointments, setAppointments] = useState(APPOINTMENTS);
 
-  const upcomingAppointments = appointments.filter((app) => app.status === "upcoming")
-  const completedAppointments = appointments.filter((app) => app.status === "completed")
-  const cancelledAppointments = appointments.filter((app) => app.status === "cancelled")
+  const upcomingAppointments = appointments.filter(
+    (app) => app.status === "upcoming"
+  );
+  const completedAppointments = appointments.filter(
+    (app) => app.status === "completed"
+  );
+  const cancelledAppointments = appointments.filter(
+    (app) => app.status === "cancelled"
+  );
 
   // Get appointments for the selected date
   const selectedDateAppointments = date
@@ -74,9 +86,9 @@ export default function AppointmentsPage() {
         (app) =>
           app.date.getDate() === date.getDate() &&
           app.date.getMonth() === date.getMonth() &&
-          app.date.getFullYear() === date.getFullYear(),
+          app.date.getFullYear() === date.getFullYear()
       )
-    : []
+    : [];
 
   // Function to format date and time
   const formatDateTime = (date: Date) => {
@@ -88,24 +100,34 @@ export default function AppointmentsPage() {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
-    }).format(date)
-  }
+    }).format(date);
+  };
 
   // Function to mark appointment as completed
   const markAsCompleted = (id: string) => {
-    setAppointments(appointments.map((app) => (app.id === id ? { ...app, status: "completed" } : app)))
-  }
+    setAppointments(
+      appointments.map((app) =>
+        app.id === id ? { ...app, status: "completed" } : app
+      )
+    );
+  };
 
   // Function to cancel appointment
   const cancelAppointment = (id: string) => {
-    setAppointments(appointments.map((app) => (app.id === id ? { ...app, status: "cancelled" } : app)))
-  }
+    setAppointments(
+      appointments.map((app) =>
+        app.id === id ? { ...app, status: "cancelled" } : app
+      )
+    );
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Appointments</h1>
-        <p className="text-muted-foreground">Manage your upcoming and past appointments</p>
+        <p className="text-muted-foreground">
+          Manage your upcoming and past appointments
+        </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
@@ -115,26 +137,46 @@ export default function AppointmentsPage() {
             <CardDescription>View your appointments by date</CardDescription>
           </CardHeader>
           <CardContent>
-            <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
+            <Calendar
+              mode="single"
+              selected={date}
+              onSelect={setDate}
+              className="rounded-md border"
+            />
             <div className="mt-6 space-y-2">
               <h3 className="font-medium">
                 {date
-                  ? date.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })
+                  ? date.toLocaleDateString("en-US", {
+                      weekday: "long",
+                      month: "long",
+                      day: "numeric",
+                    })
                   : "No date selected"}
               </h3>
               {selectedDateAppointments.length > 0 ? (
                 <div className="space-y-2">
                   {selectedDateAppointments.map((app) => (
-                    <div key={app.id} className="flex justify-between items-center p-3 border rounded-lg">
+                    <div
+                      key={app.id}
+                      className="flex justify-between items-center p-3 border rounded-lg"
+                    >
                       <div>
                         <div className="font-medium">{app.customerName}</div>
                         <div className="text-sm text-muted-foreground">
-                          {app.service} - {app.date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}
+                          {app.service} -{" "}
+                          {app.date.toLocaleTimeString("en-US", {
+                            hour: "numeric",
+                            minute: "2-digit",
+                          })}
                         </div>
                       </div>
                       <Badge
                         variant={
-                          app.status === "upcoming" ? "default" : app.status === "completed" ? "success" : "destructive"
+                          app.status === "upcoming"
+                            ? "default"
+                            : app.status === "completed"
+                            ? "success"
+                            : "destructive"
                         }
                       >
                         {app.status}
@@ -143,7 +185,9 @@ export default function AppointmentsPage() {
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground">No appointments for this date</p>
+                <p className="text-sm text-muted-foreground">
+                  No appointments for this date
+                </p>
               )}
             </div>
           </CardContent>
@@ -152,9 +196,9 @@ export default function AppointmentsPage() {
         <Card>
           <CardHeader className="pb-3">
             <Tabs defaultValue="upcoming">
-              <div className="flex items-center justify-between">
+              <div className="flex gap-4 flex-col md:flex-row items-start justify-between">
                 <CardTitle>Appointments</CardTitle>
-                <TabsList>
+                <TabsList className="flex">
                   <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
                   <TabsTrigger value="completed">Completed</TabsTrigger>
                   <TabsTrigger value="cancelled">Cancelled</TabsTrigger>
@@ -167,11 +211,16 @@ export default function AppointmentsPage() {
               <TabsContent value="upcoming" className="space-y-4">
                 {upcomingAppointments.length > 0 ? (
                   upcomingAppointments.map((app) => (
-                    <div key={app.id} className="flex flex-col space-y-2 p-4 border rounded-lg">
+                    <div
+                      key={app.id}
+                      className="flex flex-col space-y-2 p-4 border rounded-lg"
+                    >
                       <div className="flex justify-between items-start">
                         <div>
                           <div className="font-medium">{app.customerName}</div>
-                          <div className="text-sm text-muted-foreground">{app.customerEmail}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {app.customerEmail}
+                          </div>
                         </div>
                         <Badge>Upcoming</Badge>
                       </div>
@@ -180,11 +229,19 @@ export default function AppointmentsPage() {
                         <div>{formatDateTime(app.date)}</div>
                       </div>
                       <div className="flex space-x-2 mt-2">
-                        <Button size="sm" variant="outline" onClick={() => markAsCompleted(app.id)}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => markAsCompleted(app.id)}
+                        >
                           <Check className="h-4 w-4 mr-1" />
                           Mark Completed
                         </Button>
-                        <Button size="sm" variant="outline" onClick={() => cancelAppointment(app.id)}>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => cancelAppointment(app.id)}
+                        >
                           <X className="h-4 w-4 mr-1" />
                           Cancel
                         </Button>
@@ -192,17 +249,24 @@ export default function AppointmentsPage() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-center text-muted-foreground py-4">No upcoming appointments</p>
+                  <p className="text-center text-muted-foreground py-4">
+                    No upcoming appointments
+                  </p>
                 )}
               </TabsContent>
               <TabsContent value="completed" className="space-y-4">
                 {completedAppointments.length > 0 ? (
                   completedAppointments.map((app) => (
-                    <div key={app.id} className="flex flex-col space-y-2 p-4 border rounded-lg">
+                    <div
+                      key={app.id}
+                      className="flex flex-col space-y-2 p-4 border rounded-lg"
+                    >
                       <div className="flex justify-between items-start">
                         <div>
                           <div className="font-medium">{app.customerName}</div>
-                          <div className="text-sm text-muted-foreground">{app.customerEmail}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {app.customerEmail}
+                          </div>
                         </div>
                         <Badge variant="success">Completed</Badge>
                       </div>
@@ -213,17 +277,24 @@ export default function AppointmentsPage() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-center text-muted-foreground py-4">No completed appointments</p>
+                  <p className="text-center text-muted-foreground py-4">
+                    No completed appointments
+                  </p>
                 )}
               </TabsContent>
               <TabsContent value="cancelled" className="space-y-4">
                 {cancelledAppointments.length > 0 ? (
                   cancelledAppointments.map((app) => (
-                    <div key={app.id} className="flex flex-col space-y-2 p-4 border rounded-lg">
+                    <div
+                      key={app.id}
+                      className="flex flex-col space-y-2 p-4 border rounded-lg"
+                    >
                       <div className="flex justify-between items-start">
                         <div>
                           <div className="font-medium">{app.customerName}</div>
-                          <div className="text-sm text-muted-foreground">{app.customerEmail}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {app.customerEmail}
+                          </div>
                         </div>
                         <Badge variant="destructive">Cancelled</Badge>
                       </div>
@@ -234,7 +305,9 @@ export default function AppointmentsPage() {
                     </div>
                   ))
                 ) : (
-                  <p className="text-center text-muted-foreground py-4">No cancelled appointments</p>
+                  <p className="text-center text-muted-foreground py-4">
+                    No cancelled appointments
+                  </p>
                 )}
               </TabsContent>
             </Tabs>
@@ -242,6 +315,5 @@ export default function AppointmentsPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
-

@@ -1,7 +1,13 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { CalendarDays, Clock, Users, LinkIcon, User } from "lucide-react"
-import Link from "next/link"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { CalendarDays, Clock, Users, LinkIcon, User } from "lucide-react";
+import Link from "next/link";
 
 export default function DashboardPage() {
   // Mock data - would come from database in real app
@@ -9,19 +15,23 @@ export default function DashboardPage() {
     totalAppointments: 12,
     upcomingAppointments: 3,
     totalClients: 8,
-  }
+  };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">Overview of your scheduling activity</p>
+        <p className="text-muted-foreground">
+          Overview of your scheduling activity
+        </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Appointments</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Total Appointments
+            </CardTitle>
             <CalendarDays className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -30,11 +40,15 @@ export default function DashboardPage() {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Upcoming Appointments</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Upcoming Appointments
+            </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{stats.upcomingAppointments}</div>
+            <div className="text-2xl font-bold">
+              {stats.upcomingAppointments}
+            </div>
           </CardContent>
         </Card>
         <Card>
@@ -51,12 +65,17 @@ export default function DashboardPage() {
       <Card>
         <CardHeader>
           <CardTitle>Your Booking Link</CardTitle>
-          <CardDescription>Share this link with your customers so they can book appointments with you</CardDescription>
+          <CardDescription>
+            Share this link with your customers so they can book appointments
+            with you
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center space-x-2">
             <div className="bg-muted p-2 rounded-md flex-1 overflow-hidden">
-              <p className="text-sm truncate">https://scheduler-app.com/book/john-doe</p>
+              <p className="text-sm truncate">
+                https://scheduler-app.com/book/john-doe
+              </p>
             </div>
             <Button size="sm" variant="outline">
               <LinkIcon className="h-4 w-4 mr-2" />
@@ -95,7 +114,9 @@ export default function DashboardPage() {
               <div className="flex justify-between items-center">
                 <div>
                   <p className="font-medium">Sarah Williams</p>
-                  <p className="text-sm text-muted-foreground">Initial Meeting</p>
+                  <p className="text-sm text-muted-foreground">
+                    Initial Meeting
+                  </p>
                 </div>
                 <div className="text-right">
                   <p className="text-sm">Jun 15, 3:15 PM</p>
@@ -104,7 +125,9 @@ export default function DashboardPage() {
             </div>
             <div className="mt-4">
               <Button variant="outline" size="sm" asChild>
-                <Link href="/dashboard/appointments">View all appointments</Link>
+                <Link href="/dashboard/appointments">
+                  View all appointments
+                </Link>
               </Button>
             </div>
           </CardContent>
@@ -128,7 +151,11 @@ export default function DashboardPage() {
                   Set Availability
                 </Link>
               </Button>
-              <Button className="w-full justify-start" variant="outline" asChild>
+              <Button
+                className="w-full justify-start"
+                variant="outline"
+                asChild
+              >
                 <Link href="/book/john-doe" target="_blank">
                   <LinkIcon className="mr-2 h-4 w-4" />
                   Preview Booking Page
@@ -139,6 +166,5 @@ export default function DashboardPage() {
         </Card>
       </div>
     </div>
-  )
+  );
 }
-

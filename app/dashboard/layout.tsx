@@ -2,12 +2,13 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, Home, Settings, User, LogOut } from "lucide-react";
+import BottomNav from "@/components/bottom-nav";
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="px-8 flex h-14 items-center">
+        <div className="px-4 md:px-8 flex h-14 items-center">
           <div className="mr-4 flex">
             <Link
               href="/dashboard"
@@ -63,7 +64,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             </Button>
           </nav>
         </aside>
-        <main className="flex-1 p-4 md:p-6">{children}</main>
+        <main className="flex-1 w-full p-4 md:p-6 pb-20">{children}</main>
+        <BottomNav />
       </div>
     </div>
   );

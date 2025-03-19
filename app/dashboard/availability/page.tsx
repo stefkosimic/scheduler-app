@@ -1,71 +1,162 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
-const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+const DAYS = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
 const HOURS = Array.from({ length: 24 }, (_, i) => {
-  const hour = i % 12 || 12
-  const ampm = i < 12 ? "AM" : "PM"
-  return `${hour}:00 ${ampm}`
-})
+  const hour = i % 12 || 12;
+  const ampm = i < 12 ? "AM" : "PM";
+  return `${hour}:00 ${ampm}`;
+});
 
 export default function AvailabilityPage() {
   // Mock data - would be fetched from database
   const [availability, setAvailability] = useState([
-    { id: "1", day: "Monday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-    { id: "2", day: "Tuesday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-    { id: "3", day: "Wednesday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-    { id: "4", day: "Thursday", enabled: true, startTime: "9:00 AM", endTime: "5:00 PM" },
-    { id: "5", day: "Friday", enabled: true, startTime: "9:00 AM", endTime: "3:00 PM" },
-    { id: "6", day: "Saturday", enabled: false, startTime: "10:00 AM", endTime: "2:00 PM" },
-    { id: "7", day: "Sunday", enabled: false, startTime: "10:00 AM", endTime: "2:00 PM" },
-  ])
+    {
+      id: "1",
+      day: "Monday",
+      enabled: true,
+      startTime: "9:00 AM",
+      endTime: "5:00 PM",
+    },
+    {
+      id: "2",
+      day: "Tuesday",
+      enabled: true,
+      startTime: "9:00 AM",
+      endTime: "5:00 PM",
+    },
+    {
+      id: "3",
+      day: "Wednesday",
+      enabled: true,
+      startTime: "9:00 AM",
+      endTime: "5:00 PM",
+    },
+    {
+      id: "4",
+      day: "Thursday",
+      enabled: true,
+      startTime: "9:00 AM",
+      endTime: "5:00 PM",
+    },
+    {
+      id: "5",
+      day: "Friday",
+      enabled: true,
+      startTime: "9:00 AM",
+      endTime: "3:00 PM",
+    },
+    {
+      id: "6",
+      day: "Saturday",
+      enabled: false,
+      startTime: "10:00 AM",
+      endTime: "2:00 PM",
+    },
+    {
+      id: "7",
+      day: "Sunday",
+      enabled: false,
+      startTime: "10:00 AM",
+      endTime: "2:00 PM",
+    },
+  ]);
 
   const [appointmentSettings, setAppointmentSettings] = useState({
     duration: 30,
     buffer: 15,
     advance: 1,
     maxPerDay: 8,
-  })
+  });
 
   const toggleDayEnabled = (id: string) => {
-    setAvailability(availability.map((day) => (day.id === id ? { ...day, enabled: !day.enabled } : day)))
-  }
+    setAvailability(
+      availability.map((day) =>
+        day.id === id ? { ...day, enabled: !day.enabled } : day
+      )
+    );
+  };
 
-  const updateDayTime = (id: string, field: "startTime" | "endTime", value: string) => {
-    setAvailability(availability.map((day) => (day.id === id ? { ...day, [field]: value } : day)))
-  }
+  const updateDayTime = (
+    id: string,
+    field: "startTime" | "endTime",
+    value: string
+  ) => {
+    setAvailability(
+      availability.map((day) =>
+        day.id === id ? { ...day, [field]: value } : day
+      )
+    );
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Availability</h1>
-        <p className="text-muted-foreground">Set your working hours and appointment preferences</p>
+        <p className="text-muted-foreground">
+          Set your working hours and appointment preferences
+        </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Working Hours</CardTitle>
-            <CardDescription>Set your availability for each day of the week</CardDescription>
+            <CardDescription>
+              Set your availability for each day of the week
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {availability.map((day) => (
-              <div key={day.id} className="flex items-center justify-between space-x-4">
+              <div
+                key={day.id}
+                className="flex flex-col md:flex-row items-start md:items-center gap-2 justify-between"
+              >
                 <div className="flex items-center space-x-2">
-                  <Switch checked={day.enabled} onCheckedChange={() => toggleDayEnabled(day.id)} id={`day-${day.id}`} />
-                  <Label htmlFor={`day-${day.id}`} className="min-w-24">
+                  <Switch
+                    checked={day.enabled}
+                    onCheckedChange={() => toggleDayEnabled(day.id)}
+                    id={`day-${day.id}`}
+                  />
+                  <Label htmlFor={`day-${day.id}`} className="">
                     {day.day}
                   </Label>
                 </div>
                 {day.enabled ? (
                   <div className="flex items-center space-x-2">
-                    <Select value={day.startTime} onValueChange={(value) => updateDayTime(day.id, "startTime", value)}>
+                    <Select
+                      value={day.startTime}
+                      onValueChange={(value) =>
+                        updateDayTime(day.id, "startTime", value)
+                      }
+                    >
                       <SelectTrigger className="w-[110px]">
                         <SelectValue placeholder="Start time" />
                       </SelectTrigger>
@@ -78,7 +169,12 @@ export default function AvailabilityPage() {
                       </SelectContent>
                     </Select>
                     <span>to</span>
-                    <Select value={day.endTime} onValueChange={(value) => updateDayTime(day.id, "endTime", value)}>
+                    <Select
+                      value={day.endTime}
+                      onValueChange={(value) =>
+                        updateDayTime(day.id, "endTime", value)
+                      }
+                    >
                       <SelectTrigger className="w-[110px]">
                         <SelectValue placeholder="End time" />
                       </SelectTrigger>
@@ -92,29 +188,36 @@ export default function AvailabilityPage() {
                     </Select>
                   </div>
                 ) : (
-                  <span className="text-sm text-muted-foreground">Unavailable</span>
+                  <span className="text-sm text-muted-foreground">
+                    Unavailable
+                  </span>
                 )}
               </div>
             ))}
           </CardContent>
           <CardFooter>
-            <Button>Save Working Hours</Button>
+            <Button className="w-full md:w-auto">Save Working Hours</Button>
           </CardFooter>
         </Card>
 
         <Card>
           <CardHeader>
             <CardTitle>Appointment Settings</CardTitle>
-            <CardDescription>Configure how your appointments are scheduled</CardDescription>
+            <CardDescription>
+              Configure how your appointments are scheduled
+            </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+          <CardContent className="space-y-4 w-full">
+            <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="duration">Default Duration (minutes)</Label>
                 <Select
                   value={appointmentSettings.duration.toString()}
                   onValueChange={(value) =>
-                    setAppointmentSettings({ ...appointmentSettings, duration: Number.parseInt(value) })
+                    setAppointmentSettings({
+                      ...appointmentSettings,
+                      duration: Number.parseInt(value),
+                    })
                   }
                 >
                   <SelectTrigger id="duration">
@@ -135,7 +238,10 @@ export default function AvailabilityPage() {
                 <Select
                   value={appointmentSettings.buffer.toString()}
                   onValueChange={(value) =>
-                    setAppointmentSettings({ ...appointmentSettings, buffer: Number.parseInt(value) })
+                    setAppointmentSettings({
+                      ...appointmentSettings,
+                      buffer: Number.parseInt(value),
+                    })
                   }
                 >
                   <SelectTrigger id="buffer">
@@ -155,7 +261,10 @@ export default function AvailabilityPage() {
                 <Select
                   value={appointmentSettings.advance.toString()}
                   onValueChange={(value) =>
-                    setAppointmentSettings({ ...appointmentSettings, advance: Number.parseInt(value) })
+                    setAppointmentSettings({
+                      ...appointmentSettings,
+                      advance: Number.parseInt(value),
+                    })
                   }
                 >
                   <SelectTrigger id="advance">
@@ -171,11 +280,16 @@ export default function AvailabilityPage() {
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="max-per-day">Maximum Appointments Per Day</Label>
+                <Label htmlFor="max-per-day">
+                  Maximum Appointments Per Day
+                </Label>
                 <Select
                   value={appointmentSettings.maxPerDay.toString()}
                   onValueChange={(value) =>
-                    setAppointmentSettings({ ...appointmentSettings, maxPerDay: Number.parseInt(value) })
+                    setAppointmentSettings({
+                      ...appointmentSettings,
+                      maxPerDay: Number.parseInt(value),
+                    })
                   }
                 >
                   <SelectTrigger id="max-per-day">
@@ -194,11 +308,10 @@ export default function AvailabilityPage() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button>Save Settings</Button>
+            <Button className="w-full md:w-auto">Save Settings</Button>
           </CardFooter>
         </Card>
       </div>
     </div>
-  )
+  );
 }
-

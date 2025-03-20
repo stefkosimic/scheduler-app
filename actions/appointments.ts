@@ -17,3 +17,26 @@ export const getUserAppointments = async () => {
 
   return { appointments };
 };
+
+export const getDashboardData = async () => {
+  const supabase = await createClient(await cookies());
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) throw new Error("User not found");
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select(
+      "*, appointments: appointments(*, service: services(*), customer: customers(*)), customers: customers(*)"
+    )
+
+    .eq("id", user.id)
+    .single();
+
+  if (error) throw error;
+
+  return { profile };
+};

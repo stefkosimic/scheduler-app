@@ -3,8 +3,20 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, Home, Settings, User, LogOut } from "lucide-react";
 import BottomNav from "@/components/bottom-nav";
+import { getProfile } from "@/actions/auth";
+import { redirect } from "next/navigation";
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+export default async function DashboardLayout({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const { profile } = await getProfile();
+
+  if (!profile) {
+    redirect("/login");
+  }
+
   return (
     <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -20,7 +32,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
           <div className="flex flex-1 items-center justify-end space-x-4">
             <nav className="flex items-center space-x-2">
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/">
+                <Link href="/signout">
                   <LogOut className="h-4 w-4 mr-2" />
                   Logout
                 </Link>

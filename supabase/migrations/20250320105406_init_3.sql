@@ -120,12 +120,11 @@ ALTER TABLE "public"."appointment_settings" OWNER TO "postgres";
 CREATE TABLE IF NOT EXISTS "public"."appointments" (
     "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
     "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
-    "customer_name" "text",
-    "customer_email" "text",
-    "date" "text",
+    "date" timestamp with time zone,
     "service_id" "uuid",
     "status" "public"."appointments_status" DEFAULT 'pending'::"public"."appointments_status" NOT NULL,
-    "user_id" "uuid"
+    "user_id" "uuid",
+    "customer_id" "uuid"
 );
 
 
@@ -146,6 +145,18 @@ CREATE TABLE IF NOT EXISTS "public"."availability" (
 ALTER TABLE "public"."availability" OWNER TO "postgres";
 
 
+CREATE TABLE IF NOT EXISTS "public"."customers" (
+    "id" "uuid" DEFAULT "gen_random_uuid"() NOT NULL,
+    "name" "text" NOT NULL,
+    "email" "text" NOT NULL,
+    "phone" "text",
+    "created_at" timestamp without time zone DEFAULT "now"()
+);
+
+
+ALTER TABLE "public"."customers" OWNER TO "postgres";
+
+
 CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "id" "uuid" NOT NULL,
     "updated_at" timestamp with time zone,
@@ -156,6 +167,7 @@ CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "email" "text" NOT NULL,
     "company_name" "text",
     "job_title" "text",
+    "bio" "text",
     CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3))
 );
 
@@ -193,6 +205,21 @@ ALTER TABLE ONLY "public"."availability"
 
 
 
+ALTER TABLE ONLY "public"."customers"
+    ADD CONSTRAINT "customers_email_key" UNIQUE ("email");
+
+
+
+ALTER TABLE ONLY "public"."customers"
+    ADD CONSTRAINT "customers_phone_key" UNIQUE ("phone");
+
+
+
+ALTER TABLE ONLY "public"."customers"
+    ADD CONSTRAINT "customers_pkey" PRIMARY KEY ("id");
+
+
+
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_email_key" UNIQUE ("email");
 
@@ -215,6 +242,11 @@ ALTER TABLE ONLY "public"."services"
 
 ALTER TABLE ONLY "public"."appointment_settings"
     ADD CONSTRAINT "appointment_settings_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY "public"."appointments"
+    ADD CONSTRAINT "appointments_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "public"."customers"("id") ON DELETE CASCADE;
 
 
 
@@ -253,9 +285,6 @@ CREATE POLICY "Users can insert their own profile." ON "public"."profiles" FOR I
 
 CREATE POLICY "Users can update own profile." ON "public"."profiles" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "id"));
 
-
-
-ALTER TABLE "public"."appointments" ENABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
@@ -495,6 +524,12 @@ GRANT ALL ON TABLE "public"."appointments" TO "service_role";
 GRANT ALL ON TABLE "public"."availability" TO "anon";
 GRANT ALL ON TABLE "public"."availability" TO "authenticated";
 GRANT ALL ON TABLE "public"."availability" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."customers" TO "anon";
+GRANT ALL ON TABLE "public"."customers" TO "authenticated";
+GRANT ALL ON TABLE "public"."customers" TO "service_role";
 
 
 

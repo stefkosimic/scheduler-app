@@ -1,0 +1,11 @@
+{
+  "app_name": "Scheduler",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "customers": "Customers",
+    "services": "Services",
+    "availability": "Availability",
+    "appointments": "Appointments",
+    "settings": "Settings"
+  }
+}

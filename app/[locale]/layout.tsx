@@ -36,13 +36,13 @@ export default async function RootLayout({
     return notFound();
   }
 
-  const { resources } = await initTranslations(locale, ["auth"]);
+  const { resources } = await initTranslations(locale, ["auth", "sidebar"]);
 
   return (
     <html lang={locale} dir={dir(locale)} suppressHydrationWarning>
       <body className={inter.className}>
         <TranslationsProvider
-          namespaces={["auth"]}
+          namespaces={["auth", "sidebar"]}
           locale={locale}
           resources={resources}
         >

@@ -5,6 +5,7 @@ import { Tables } from "@/types/db";
 import dayjs from "dayjs";
 import { CalendarDays, Clock, Users, LinkIcon, User } from "lucide-react";
 
+import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,14 +28,10 @@ export default function DashboardData({ profile }: any) {
   console.log("profile", profile);
 
   return (
-    <div className="space-y-6 w-full">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Overview of your scheduling activity
-        </p>
-      </div>
-
+    <DashboardPageWrapper
+      title="Dashboard"
+      subtitle="Overview of your scheduling activity"
+    >
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -171,6 +168,6 @@ export default function DashboardData({ profile }: any) {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </DashboardPageWrapper>
   );
 }

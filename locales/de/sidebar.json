@@ -1,0 +1,11 @@
+{
+  "app_name": "Terminplaner",
+  "navigation": {
+    "dashboard": "Dashboard",
+    "customers": "Kunden",
+    "services": "Dienstleistungen",
+    "availability": "Verfügbarkeit",
+    "appointments": "Termine",
+    "settings": "Einstellungen"
+  }
+}

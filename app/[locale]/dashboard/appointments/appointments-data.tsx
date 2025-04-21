@@ -5,6 +5,7 @@ import { Tables } from "@/types/db";
 import dayjs from "dayjs";
 import { Check, X } from "lucide-react";
 
+import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -94,15 +95,11 @@ export default function AppointmentsData(props: {
   );
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Appointments</h1>
-        <p className="text-muted-foreground">
-          Manage your upcoming and past appointments
-        </p>
-      </div>
-
-      <div className="grid gap-6 md:grid-cols-2">
+    <DashboardPageWrapper
+      title="Appointments"
+      subtitle="Manage your upcoming and past appointments"
+    >
+      <div className="flex gap-6">
         <Card>
           <CardHeader>
             <CardTitle>Calendar</CardTitle>
@@ -155,7 +152,7 @@ export default function AppointmentsData(props: {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="w-full">
           <CardHeader className="pb-3">
             <Tabs defaultValue="upcoming">
               <div className="flex gap-4 flex-col w-full items-start justify-between">
@@ -251,6 +248,6 @@ export default function AppointmentsData(props: {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </DashboardPageWrapper>
   );
 }

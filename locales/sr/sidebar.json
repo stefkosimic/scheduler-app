@@ -1,0 +1,11 @@
+{
+  "app_name": "Планер",
+  "navigation": {
+    "dashboard": "Контролна табла",
+    "customers": "Клијенти",
+    "services": "Услуге",
+    "availability": "Доступност",
+    "appointments": "Термини",
+    "settings": "Подешавања"
+  }
+}

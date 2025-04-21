@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { Tables } from "@/types/db";
 
+import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -26,7 +28,8 @@ import { DAYS } from "@/lib/utils";
 export default function AvailabilityData(props: any) {
   const [availability, setAvailability] = useState(
     props.availability.sort(
-      (a: any, b: any) => DAYS.indexOf(a.day) - DAYS.indexOf(b.day)
+      (a: Tables<"availability">, b: Tables<"availability">) =>
+        DAYS.indexOf(a.day) - DAYS.indexOf(b.day)
     )
   );
   const [appointmentSettings, setAppointmentSettings] = useState(
@@ -35,7 +38,7 @@ export default function AvailabilityData(props: any) {
 
   const toggleDayEnabled = (id: string) => {
     setAvailability(
-      availability.map((day) =>
+      availability.map((day: Tables<"availability">) =>
         day.id === id ? { ...day, enabled: !day.enabled } : day
       )
     );
@@ -47,21 +50,17 @@ export default function AvailabilityData(props: any) {
     value: string
   ) => {
     setAvailability(
-      availability.map((day) =>
+      availability.map((day: Tables<"availability">) =>
         day.id === id ? { ...day, [field]: value + ":00" } : day
       )
     );
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Availability</h1>
-        <p className="text-muted-foreground">
-          Set your working hours and appointment preferences
-        </p>
-      </div>
-
+    <DashboardPageWrapper
+      title="Availability"
+      subtitle="Set your working hours and appointment preferences"
+    >
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
@@ -71,7 +70,7 @@ export default function AvailabilityData(props: any) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {availability.map((day) => (
+            {availability.map((day: Tables<"availability">) => (
               <div
                 key={day.id}
                 className="flex flex-col md:flex-row items-start md:items-center md:h-9 gap-2 justify-between"
@@ -231,6 +230,6 @@ export default function AvailabilityData(props: any) {
           </CardFooter>
         </Card>
       </div>
-    </div>
+    </DashboardPageWrapper>
   );
 }

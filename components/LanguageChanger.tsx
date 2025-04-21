@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function LanguageChanger() {
+export default function LanguageChanger({ subMenu }: { subMenu?: boolean }) {
   const { i18n } = useTranslation();
   const currentLocale = i18n.language;
   const router = useRouter();
@@ -58,23 +58,39 @@ export default function LanguageChanger() {
   ];
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Globe className="h-5 w-5" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        {languages.map((language) => (
-          <DropdownMenuItem
-            key={language.value}
-            onClick={() => handleChange(language.value)}
-            className="cursor-pointer"
-          >
-            {language.label}
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <>
+      {subMenu ? (
+        <>
+          {languages.map((language) => (
+            <DropdownMenuItem
+              key={language.value}
+              onClick={() => handleChange(language.value)}
+              className="cursor-pointer"
+            >
+              {language.label}
+            </DropdownMenuItem>
+          ))}
+        </>
+      ) : (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <Globe className="h-5 w-5" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            {languages.map((language) => (
+              <DropdownMenuItem
+                key={language.value}
+                onClick={() => handleChange(language.value)}
+                className="cursor-pointer"
+              >
+                {language.label}
+              </DropdownMenuItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
+    </>
   );
 }

@@ -1,0 +1,26 @@
+{
+  "overview": {
+    "title": "Dashboard",
+    "subtitle": "Überblick über Ihre Terminplanungsaktivitäten"
+  },
+  "stats": {
+    "total_appointments": "Gesamttermine",
+    "upcoming_appointments": "Anstehende Termine",
+    "total_clients": "Gesamtkunden"
+  },
+  "booking_link": {
+    "title": "Ihr Buchungslink",
+    "description": "Teilen Sie diesen Link mit Ihren Kunden, damit sie Termine bei Ihnen buchen können",
+    "copy": "Kopieren"
+  },
+  "recent_appointments": {
+    "title": "Letzte Termine",
+    "view_all": "Alle Termine anzeigen"
+  },
+  "quick_actions": {
+    "title": "Schnellzugriff",
+    "update_profile": "Profil aktualisieren",
+    "set_availability": "Verfügbarkeit festlegen",
+    "preview_booking": "Buchungsseite Vorschau"
+  }
+}

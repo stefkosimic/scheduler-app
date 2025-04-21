@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Tables } from "@/types/db";
+import { useTranslation } from "react-i18next";
 
 import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import {
@@ -34,6 +35,7 @@ export default function SettingsContent({
 }: {
   profile: Tables<"profiles">;
 }) {
+  const { t } = useTranslation("settings");
   // State for forms
 
   const [data, setData] = useState(profile);
@@ -60,41 +62,38 @@ export default function SettingsContent({
   };
 
   return (
-    <DashboardPageWrapper
-      title="Settings"
-      subtitle="Manage your personal information, security, and privacy preferences."
-    >
+    <DashboardPageWrapper title={t("page.title")} subtitle={t("page.subtitle")}>
       <Tabs defaultValue="personal">
         <TabsList className="w-full md:w-auto">
           <TabsTrigger className="w-full md:w-auto" value="personal">
-            Personal information
+            {t("tabs.personal")}
           </TabsTrigger>
           <TabsTrigger className="w-full md:w-auto" value="security">
-            Security & privacy
+            {t("tabs.security")}
           </TabsTrigger>
         </TabsList>
         <TabsContent value="personal" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Basic Information</CardTitle>
-              <CardDescription>
-                Update your personal and contact information
-              </CardDescription>
+              <CardTitle>{t("personal.title")}</CardTitle>
+              <CardDescription>{t("personal.description")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Full Name</Label>
+                  <Label htmlFor="name">{t("personal.fields.full_name")}</Label>
                   <Input
                     id="name"
-                    value={data.full_name}
+                    value={data.full_name || ""}
                     onChange={(e) =>
                       setData({ ...data, full_name: e.target.value })
                     }
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="title">Professional Title</Label>
+                  <Label htmlFor="title">
+                    {t("personal.fields.job_title")}
+                  </Label>
                   <Input
                     id="job_title"
                     value={data.job_title || ""}
@@ -104,7 +103,7 @@ export default function SettingsContent({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("personal.fields.email")}</Label>
                   <Input
                     id="email"
                     type="email"
@@ -114,19 +113,9 @@ export default function SettingsContent({
                     }
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input
-                    id="phone"
-                    value={data.phone}
-                    onChange={(e) =>
-                      setData({ ...data, phone: e.target.value })
-                    }
-                  />
-                </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="bio">Bio</Label>
+                <Label htmlFor="bio">{t("personal.fields.bio")}</Label>
                 <Textarea
                   id="bio"
                   rows={4}
@@ -136,90 +125,102 @@ export default function SettingsContent({
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full md:w-auto">Save Changes</Button>
+              <Button className="w-full md:w-auto">
+                {t("personal.actions.save")}
+              </Button>
             </CardFooter>
           </Card>
         </TabsContent>
         <TabsContent value="security" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Change Password</CardTitle>
-              <CardDescription>
-                Set a new password for your account.
-              </CardDescription>
+              <CardTitle>{t("security.title")}</CardTitle>
+              <CardDescription>{t("security.description")}</CardDescription>
             </CardHeader>
             <form onSubmit={handlePasswordChange}>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="currentPassword">Current Password</Label>
+                  <Label htmlFor="currentPassword">
+                    {t("security.fields.current_password")}
+                  </Label>
                   <Input
                     id="currentPassword"
                     type="password"
                     value={currentPassword}
                     onChange={(e) => setCurrentPassword(e.target.value)}
                     required
-                    placeholder="Current password"
+                    placeholder={t("security.fields.current_password")}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="newPassword">New Password</Label>
+                  <Label htmlFor="newPassword">
+                    {t("security.fields.new_password")}
+                  </Label>
                   <Input
                     id="newPassword"
                     type="password"
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     required
-                    placeholder="New password"
+                    placeholder={t("security.fields.new_password")}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">Confirm New Password</Label>
+                  <Label htmlFor="confirmPassword">
+                    {t("security.fields.confirm_password")}
+                  </Label>
                   <Input
                     id="confirmPassword"
                     type="password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     required
-                    placeholder="Repeat new password"
+                    placeholder={t("security.fields.confirm_password")}
                   />
                 </div>
               </CardContent>
               <CardFooter className="w-full md:w-auto">
                 <Button type="submit" className="w-full md:w-auto">
-                  Change Password
+                  {t("security.actions.change")}
                 </Button>
               </CardFooter>
             </form>
           </Card>
           <Card>
             <CardHeader>
-              <CardTitle className="text-destructive">Delete Account</CardTitle>
+              <CardTitle className="text-destructive">
+                {t("delete.title")}
+              </CardTitle>
               <CardDescription className="text-destructive">
-                This action is irreversible. All your data will be permanently
-                deleted.
+                {t("delete.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="destructive">Delete Account</Button>
+                  <Button variant="destructive">{t("delete.button")}</Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                    <AlertDialogTitle>
+                      {t("delete.dialog.title")}
+                    </AlertDialogTitle>
                     <AlertDialogDescription>
-                      This will permanently delete your account and all
-                      associated data. This action cannot be undone.
+                      {t("delete.dialog.description")}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel>
+                      {t("delete.dialog.cancel")}
+                    </AlertDialogCancel>
                     <AlertDialogAction
                       onClick={handleDeleteAccount}
                       disabled={deleteLoading}
                       className="bg-destructive"
                     >
-                      {deleteLoading ? "Deleting..." : "Delete"}
+                      {deleteLoading
+                        ? t("delete.dialog.deleting")
+                        : t("delete.dialog.confirm")}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>

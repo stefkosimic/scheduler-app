@@ -1,0 +1,57 @@
+{
+  "page": {
+    "title": "Einstellungen",
+    "subtitle": "Verwalten Sie Ihre persönlichen Informationen, Sicherheits- und Datenschutzeinstellungen."
+  },
+  "tabs": {
+    "personal": "Persönliche Informationen",
+    "security": "Sicherheit & Datenschutz"
+  },
+  "personal": {
+    "title": "Grundlegende Informationen",
+    "description": "Aktualisieren Sie Ihre persönlichen und Kontaktinformationen",
+    "fields": {
+      "full_name": "Vollständiger Name",
+      "job_title": "Berufsbezeichnung",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "bio": "Biografie"
+    },
+    "actions": {
+      "save": "Änderungen speichern"
+    }
+  },
+  "security": {
+    "title": "Passwort ändern",
+    "description": "Legen Sie ein neues Passwort für Ihr Konto fest.",
+    "fields": {
+      "current_password": "Aktuelles Passwort",
+      "new_password": "Neues Passwort",
+      "confirm_password": "Neues Passwort bestätigen"
+    },
+    "actions": {
+      "change": "Passwort ändern"
+    }
+  },
+  "delete": {
+    "title": "Konto löschen",
+    "description": "Diese Aktion ist unwiderruflich. Alle Ihre Daten werden dauerhaft gelöscht.",
+    "button": "Konto löschen",
+    "dialog": {
+      "title": "Sind Sie sicher?",
+      "description": "Dadurch wird Ihr Konto und alle zugehörigen Daten dauerhaft gelöscht. Diese Aktion kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "confirm": "Löschen",
+      "deleting": "Lösche..."
+    }
+  },
+  "userDropdown": {
+    "profile": "Profil",
+    "billing": "Abrechnung",
+    "language": "Sprache",
+    "logout": "Abmelden"
+  },
+  "themeToggle": {
+    "toggle": "Thema wechseln"
+  }
+}

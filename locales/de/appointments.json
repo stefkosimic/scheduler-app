@@ -1,0 +1,37 @@
+{
+  "page": {
+    "title": "Termine",
+    "subtitle": "Verwalten Sie Ihre anstehenden und vergangenen Termine"
+  },
+  "calendar": {
+    "title": "Kalender",
+    "description": "Termine nach Datum anzeigen",
+    "no_date": "Kein Datum ausgewählt",
+    "no_appointments": "Keine Termine für dieses Datum"
+  },
+  "appointments": {
+    "title": "Termine",
+    "tabs": {
+      "pending": "Ausstehend",
+      "upcoming": "Anstehend",
+      "completed": "Abgeschlossen",
+      "cancelled": "Storniert"
+    },
+    "status": {
+      "pending": "ausstehend",
+      "upcoming": "anstehend",
+      "completed": "abgeschlossen",
+      "cancelled": "storniert"
+    },
+    "actions": {
+      "mark_completed": "Als abgeschlossen markieren",
+      "cancel": "Termin stornieren"
+    },
+    "empty": {
+      "pending": "Keine ausstehenden Termine",
+      "upcoming": "Keine anstehenden Termine",
+      "completed": "Keine abgeschlossenen Termine",
+      "cancelled": "Keine stornierten Termine"
+    }
+  }
+}

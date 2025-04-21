@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Tables } from "@/types/db";
 import { PlusCircle } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Button } from "@/components/ui/button";
@@ -37,6 +38,7 @@ export default function ServicesContent({
 }: {
   services: Tables<"services">[];
 }) {
+  const { t } = useTranslation("services");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] =
     useState<Tables<"services"> | null>(null);
@@ -76,12 +78,12 @@ export default function ServicesContent({
 
   return (
     <DashboardPageWrapper
-      title="Services"
-      subtitle="Manage your services"
+      title={t("page.title")}
+      subtitle={t("page.subtitle")}
       actions={
         <Button onClick={handleAddNew}>
           <PlusCircle className="h-4 w-4" />
-          Add Service
+          {t("actions.add_service")}
         </Button>
       }
     >
@@ -89,10 +91,10 @@ export default function ServicesContent({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Service Name</TableHead>
-              <TableHead>Duration (min)</TableHead>
-              <TableHead>Price ($)</TableHead>
-              <TableHead>Description</TableHead>
+              <TableHead>{t("table.headers.name")}</TableHead>
+              <TableHead>{t("table.headers.duration")}</TableHead>
+              <TableHead>{t("table.headers.price")}</TableHead>
+              <TableHead>{t("table.headers.description")}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -117,13 +119,13 @@ export default function ServicesContent({
           <DialogContent>
             <DialogHeader>
               <DialogTitle>
-                {selectedService ? "Edit Service" : "Add New Service"}
+                {selectedService ? t("modal.title.edit") : t("modal.title.add")}
               </DialogTitle>
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Service Name</Label>
+                  <Label htmlFor="name">{t("modal.form.name.label")}</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -134,7 +136,9 @@ export default function ServicesContent({
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-2">
-                    <Label htmlFor="duration">Duration (min)</Label>
+                    <Label htmlFor="duration">
+                      {t("modal.form.duration.label")}
+                    </Label>
                     <Input
                       id="duration"
                       type="number"
@@ -145,7 +149,7 @@ export default function ServicesContent({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="price">Price ($)</Label>
+                    <Label htmlFor="price">{t("modal.form.price.label")}</Label>
                     <Input
                       id="price"
                       type="number"
@@ -158,7 +162,9 @@ export default function ServicesContent({
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">
+                  {t("modal.form.description.label")}
+                </Label>
                 <Textarea
                   id="description"
                   rows={3}
@@ -171,10 +177,12 @@ export default function ServicesContent({
             </div>
             <DialogFooter>
               <Button variant="outline" onClick={() => setIsModalOpen(false)}>
-                Cancel
+                {t("actions.cancel")}
               </Button>
               <Button onClick={handleSubmit}>
-                {selectedService ? "Save Changes" : "Add Service"}
+                {selectedService
+                  ? t("actions.save_changes")
+                  : t("actions.add_service")}
               </Button>
             </DialogFooter>
           </DialogContent>

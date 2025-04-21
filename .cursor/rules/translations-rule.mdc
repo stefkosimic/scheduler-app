@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# General Rules for Translations (i18n)
+
+## 1. All user-facing text must use translation keys
+
+- **Never hardcode** user-visible strings in components.
+- Always use the translation function (e.g., `t('namespace.key')`) for any text that appears in the UI.
+
+## 2. Organize translations by feature or page
+
+- Use a separate JSON file for each major feature or page (e.g., `appointments.json`, `settings.json`).
+- Place these files in each language's folder under `locales/{lang}/`.
+
+## 3. Keep translation keys consistent across languages
+
+- The structure and keys in each language file **must match**.
+- If you add a new key in one language, add it in all others, even if the value is a placeholder.
+
+## 4. Use descriptive, nested keys
+
+- Group related strings under logical namespaces (e.g., `"page.title"`, `"form.fields.email"`, `"actions.save"`).
+- This makes it easier to manage and find translations.
+
+## 5. Import and use the translation hook in components
+
+- Example: `const { t } = useTranslation('settings');`
+- Use `t('key')` for all user-facing text.
+
+## 6. Update translation files when UI changes
+
+- When you add, remove, or change UI text, **immediately update all translation files** to match.
+
+## 7. Fallbacks and missing translations
+
+- If a translation is missing, the key or a fallback language will be shown. Always check for missing keys before release.
+
+---
+
+### Example Usage in a Component
+
+```tsx
+const { t } = useTranslation("settings");
+<Button>{t("actions.save")}</Button>;
+```
+
+### Example Translation File Structure
+
+```json
+{
+  "page": {
+    "title": "Settings"
+  },
+  "actions": {
+    "save": "Save Changes"
+  }
+}
+```
+
+---
+
+**Summary:**
+
+> Always use translation keys for all user-facing text, keep translation files organized and consistent, and update all languages together when making changes.

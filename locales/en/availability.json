@@ -1,0 +1,51 @@
+{
+  "page": {
+    "title": "Availability",
+    "subtitle": "Set your working hours and appointment preferences"
+  },
+  "working_hours": {
+    "title": "Working Hours",
+    "description": "Set your availability for each day of the week",
+    "unavailable": "Unavailable",
+    "to": "to",
+    "save": "Save Working Hours"
+  },
+  "appointment_settings": {
+    "title": "Appointment Settings",
+    "description": "Configure how your appointments are scheduled",
+    "duration": {
+      "label": "Default Duration (minutes)",
+      "placeholder": "Duration",
+      "options": {
+        "15": "15 minutes",
+        "30": "30 minutes",
+        "45": "45 minutes",
+        "60": "60 minutes",
+        "90": "90 minutes",
+        "120": "120 minutes"
+      }
+    },
+    "buffer": {
+      "label": "Buffer Time (minutes)",
+      "placeholder": "Buffer",
+      "options": {
+        "0": "No buffer",
+        "5": "5 minutes",
+        "10": "10 minutes",
+        "15": "15 minutes",
+        "30": "30 minutes"
+      }
+    },
+    "advance": {
+      "label": "Minimum Advance Notice (days)",
+      "placeholder": "Advance",
+      "options": {
+        "0": "Same day",
+        "1": "1 day",
+        "2": "2 days",
+        "3": "3 days",
+        "7": "1 week"
+      }
+    }
+  }
+}

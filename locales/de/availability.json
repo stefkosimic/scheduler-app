@@ -1,0 +1,51 @@
+{
+  "page": {
+    "title": "Verfügbarkeit",
+    "subtitle": "Legen Sie Ihre Arbeitszeiten und Termineinstellungen fest"
+  },
+  "working_hours": {
+    "title": "Arbeitszeiten",
+    "description": "Legen Sie Ihre Verfügbarkeit für jeden Wochentag fest",
+    "unavailable": "Nicht verfügbar",
+    "to": "bis",
+    "save": "Arbeitszeiten speichern"
+  },
+  "appointment_settings": {
+    "title": "Termineinstellungen",
+    "description": "Konfigurieren Sie, wie Ihre Termine geplant werden",
+    "duration": {
+      "label": "Standarddauer (Minuten)",
+      "placeholder": "Dauer",
+      "options": {
+        "15": "15 Minuten",
+        "30": "30 Minuten",
+        "45": "45 Minuten",
+        "60": "60 Minuten",
+        "90": "90 Minuten",
+        "120": "120 Minuten"
+      }
+    },
+    "buffer": {
+      "label": "Pufferzeit (Minuten)",
+      "placeholder": "Puffer",
+      "options": {
+        "0": "Kein Puffer",
+        "5": "5 Minuten",
+        "10": "10 Minuten",
+        "15": "15 Minuten",
+        "30": "30 Minuten"
+      }
+    },
+    "advance": {
+      "label": "Mindestvorlaufzeit (Tage)",
+      "placeholder": "Vorlauf",
+      "options": {
+        "0": "Am selben Tag",
+        "1": "1 Tag",
+        "2": "2 Tage",
+        "3": "3 Tage",
+        "7": "1 Woche"
+      }
+    }
+  }
+}

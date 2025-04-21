@@ -1,0 +1,26 @@
+{
+  "overview": {
+    "title": "Dashboard",
+    "subtitle": "Overview of your scheduling activity"
+  },
+  "stats": {
+    "total_appointments": "Total Appointments",
+    "upcoming_appointments": "Upcoming Appointments",
+    "total_clients": "Total Clients"
+  },
+  "booking_link": {
+    "title": "Your Booking Link",
+    "description": "Share this link with your customers so they can book appointments with you",
+    "copy": "Copy"
+  },
+  "recent_appointments": {
+    "title": "Recent Appointments",
+    "view_all": "View all appointments"
+  },
+  "quick_actions": {
+    "title": "Quick Actions",
+    "update_profile": "Update Profile",
+    "set_availability": "Set Availability",
+    "preview_booking": "Preview Booking Page"
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "page": {
+    "title": "Settings",
+    "subtitle": "Manage your personal information, security, and privacy preferences."
+  },
+  "tabs": {
+    "personal": "Personal information",
+    "security": "Security & privacy"
+  },
+  "personal": {
+    "title": "Basic Information",
+    "description": "Update your personal and contact information",
+    "fields": {
+      "full_name": "Full Name",
+      "job_title": "Professional Title",
+      "email": "Email",
+      "phone": "Phone",
+      "bio": "Bio"
+    },
+    "actions": {
+      "save": "Save Changes"
+    }
+  },
+  "security": {
+    "title": "Change Password",
+    "description": "Set a new password for your account.",
+    "fields": {
+      "current_password": "Current Password",
+      "new_password": "New Password",
+      "confirm_password": "Confirm New Password"
+    },
+    "actions": {
+      "change": "Change Password"
+    }
+  },
+  "delete": {
+    "title": "Delete Account",
+    "description": "This action is irreversible. All your data will be permanently deleted.",
+    "button": "Delete Account",
+    "dialog": {
+      "title": "Are you sure?",
+      "description": "This will permanently delete your account and all associated data. This action cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete",
+      "deleting": "Deleting..."
+    }
+  },
+  "userDropdown": {
+    "profile": "Profile",
+    "billing": "Billing",
+    "language": "Language",
+    "logout": "Logout"
+  },
+  "themeToggle": {
+    "toggle": "Toggle theme"
+  }
+}

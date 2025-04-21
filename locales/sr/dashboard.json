@@ -1,0 +1,26 @@
+{
+  "overview": {
+    "title": "Командна табла",
+    "subtitle": "Преглед ваших активности заказивања"
+  },
+  "stats": {
+    "total_appointments": "Укупно термина",
+    "upcoming_appointments": "Предстојећи термини",
+    "total_clients": "Укупно клијената"
+  },
+  "booking_link": {
+    "title": "Ваш линк за заказивање",
+    "description": "Поделите овај линк са вашим клијентима како би могли да закажу термин код вас",
+    "copy": "Копирај"
+  },
+  "recent_appointments": {
+    "title": "Недавни термини",
+    "view_all": "Прикажи све термине"
+  },
+  "quick_actions": {
+    "title": "Брзе акције",
+    "update_profile": "Ажурирај профил",
+    "set_availability": "Подеси доступност",
+    "preview_booking": "Прегледај страницу за заказивање"
+  }
+}

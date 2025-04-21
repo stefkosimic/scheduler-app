@@ -1,0 +1,36 @@
+{
+  "page": {
+    "title": "Kunden",
+    "subtitle": "Verwalten und anzeigen Ihrer Kundenliste"
+  },
+  "table": {
+    "headers": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon"
+    }
+  },
+  "customer_details": {
+    "title": "Kundendetails",
+    "tabs": {
+      "info": "Info",
+      "appointments": "Termine"
+    },
+    "contact_info": {
+      "title": "Kontaktinformationen",
+      "email": "E-Mail",
+      "phone": "Telefon"
+    },
+    "notes": {
+      "title": "Notizen",
+      "placeholder": "Fügen Sie Notizen zum Kunden hinzu..."
+    },
+    "appointments": {
+      "title": "Terminverlauf",
+      "headers": {
+        "date": "Datum",
+        "service": "Dienstleistung"
+      }
+    }
+  }
+}

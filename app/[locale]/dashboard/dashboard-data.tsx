@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Tables } from "@/types/db";
 import dayjs from "dayjs";
 import { CalendarDays, Clock, Users, LinkIcon, User } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Button } from "@/components/ui/button";
@@ -16,6 +17,8 @@ import {
 } from "@/components/ui/card";
 
 export default function DashboardData({ profile }: any) {
+  const { t } = useTranslation("dashboard");
+
   // Mock data - would come from database in real app
   const stats = {
     totalAppointments: profile.appointments.length,
@@ -29,14 +32,14 @@ export default function DashboardData({ profile }: any) {
 
   return (
     <DashboardPageWrapper
-      title="Dashboard"
-      subtitle="Overview of your scheduling activity"
+      title={t("overview.title")}
+      subtitle={t("overview.subtitle")}
     >
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Total Appointments
+              {t("stats.total_appointments")}
             </CardTitle>
             <CalendarDays className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -47,7 +50,7 @@ export default function DashboardData({ profile }: any) {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Upcoming Appointments
+              {t("stats.upcoming_appointments")}
             </CardTitle>
             <Clock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -59,7 +62,9 @@ export default function DashboardData({ profile }: any) {
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Clients</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              {t("stats.total_clients")}
+            </CardTitle>
             <Users className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -70,11 +75,8 @@ export default function DashboardData({ profile }: any) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Your Booking Link</CardTitle>
-          <CardDescription>
-            Share this link with your customers so they can book appointments
-            with you
-          </CardDescription>
+          <CardTitle>{t("booking_link.title")}</CardTitle>
+          <CardDescription>{t("booking_link.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex items-center space-x-2">
@@ -85,7 +87,7 @@ export default function DashboardData({ profile }: any) {
             </div>
             <Button size="sm" variant="outline">
               <LinkIcon className="h-4 w-4 mr-2" />
-              Copy
+              {t("booking_link.copy")}
             </Button>
           </div>
         </CardContent>
@@ -94,7 +96,7 @@ export default function DashboardData({ profile }: any) {
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Appointments</CardTitle>
+            <CardTitle>{t("recent_appointments.title")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -129,7 +131,7 @@ export default function DashboardData({ profile }: any) {
             <div className="mt-4">
               <Button variant="outline" size="sm" asChild>
                 <Link href="/dashboard/appointments">
-                  View all appointments
+                  {t("recent_appointments.view_all")}
                 </Link>
               </Button>
             </div>
@@ -138,20 +140,20 @@ export default function DashboardData({ profile }: any) {
 
         <Card>
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle>{t("quick_actions.title")}</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               <Button className="w-full justify-start" asChild>
                 <Link href="/dashboard/profile">
                   <User className="mr-2 h-4 w-4" />
-                  Update Profile
+                  {t("quick_actions.update_profile")}
                 </Link>
               </Button>
               <Button className="w-full justify-start" asChild>
                 <Link href="/dashboard/availability">
                   <Clock className="mr-2 h-4 w-4" />
-                  Set Availability
+                  {t("quick_actions.set_availability")}
                 </Link>
               </Button>
               <Button
@@ -161,7 +163,7 @@ export default function DashboardData({ profile }: any) {
               >
                 <Link href={`/book/${profile.username}`} target="_blank">
                   <LinkIcon className="mr-2 h-4 w-4" />
-                  Preview Booking Page
+                  {t("quick_actions.preview_booking")}
                 </Link>
               </Button>
             </div>

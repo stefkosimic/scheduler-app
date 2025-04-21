@@ -1,12 +1,15 @@
+"use client";
+
+import { useTranslation } from "react-i18next";
+
 import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { CustomersTable } from "@/components/customers/customers-table";
 
 export default function CustomersPage() {
+  const { t } = useTranslation("customers");
+
   return (
-    <DashboardPageWrapper
-      title="Customers"
-      subtitle="Manage and view your customer list"
-    >
+    <DashboardPageWrapper title={t("page.title")} subtitle={t("page.subtitle")}>
       <CustomersTable />
     </DashboardPageWrapper>
   );

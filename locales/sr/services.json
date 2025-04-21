@@ -1,0 +1,39 @@
+{
+  "page": {
+    "title": "Услуге",
+    "subtitle": "Управљајте вашим услугама"
+  },
+  "actions": {
+    "add_service": "Додај услугу",
+    "cancel": "Откажи",
+    "save_changes": "Сачувај измене"
+  },
+  "table": {
+    "headers": {
+      "name": "Назив услуге",
+      "duration": "Трајање (мин)",
+      "price": "Цена (РСД)",
+      "description": "Опис"
+    }
+  },
+  "modal": {
+    "title": {
+      "edit": "Измени услугу",
+      "add": "Додај нову услугу"
+    },
+    "form": {
+      "name": {
+        "label": "Назив услуге"
+      },
+      "duration": {
+        "label": "Трајање (мин)"
+      },
+      "price": {
+        "label": "Цена (РСД)"
+      },
+      "description": {
+        "label": "Опис"
+      }
+    }
+  }
+}

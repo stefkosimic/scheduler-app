@@ -1,0 +1,36 @@
+{
+  "page": {
+    "title": "Customers",
+    "subtitle": "Manage and view your customer list"
+  },
+  "table": {
+    "headers": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone"
+    }
+  },
+  "customer_details": {
+    "title": "Customer Details",
+    "tabs": {
+      "info": "Info",
+      "appointments": "Appointments"
+    },
+    "contact_info": {
+      "title": "Contact Information",
+      "email": "Email",
+      "phone": "Phone"
+    },
+    "notes": {
+      "title": "Notes",
+      "placeholder": "Add notes about the customer..."
+    },
+    "appointments": {
+      "title": "Appointment History",
+      "headers": {
+        "date": "Date",
+        "service": "Service"
+      }
+    }
+  }
+}

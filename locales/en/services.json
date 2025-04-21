@@ -1,0 +1,39 @@
+{
+  "page": {
+    "title": "Services",
+    "subtitle": "Manage your services"
+  },
+  "actions": {
+    "add_service": "Add Service",
+    "cancel": "Cancel",
+    "save_changes": "Save Changes"
+  },
+  "table": {
+    "headers": {
+      "name": "Service Name",
+      "duration": "Duration (min)",
+      "price": "Price ($)",
+      "description": "Description"
+    }
+  },
+  "modal": {
+    "title": {
+      "edit": "Edit Service",
+      "add": "Add New Service"
+    },
+    "form": {
+      "name": {
+        "label": "Service Name"
+      },
+      "duration": {
+        "label": "Duration (min)"
+      },
+      "price": {
+        "label": "Price ($)"
+      },
+      "description": {
+        "label": "Description"
+      }
+    }
+  }
+}

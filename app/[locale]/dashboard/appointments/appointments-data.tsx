@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Tables } from "@/types/db";
 import dayjs from "dayjs";
 import { Check, X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +27,7 @@ type Appointment = Tables<"appointments"> & {
 export default function AppointmentsData(props: {
   appointments: Appointment[];
 }) {
+  const { t } = useTranslation("appointments");
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [appointments, setAppointments] = useState(props.appointments);
   const [activeTab, setActiveTab] = useState<string>("upcoming");
@@ -95,15 +97,12 @@ export default function AppointmentsData(props: {
   );
 
   return (
-    <DashboardPageWrapper
-      title="Appointments"
-      subtitle="Manage your upcoming and past appointments"
-    >
+    <DashboardPageWrapper title={t("page.title")} subtitle={t("page.subtitle")}>
       <div className="flex gap-6">
         <Card>
           <CardHeader>
-            <CardTitle>Calendar</CardTitle>
-            <CardDescription>View your appointments by date</CardDescription>
+            <CardTitle>{t("calendar.title")}</CardTitle>
+            <CardDescription>{t("calendar.description")}</CardDescription>
           </CardHeader>
           <CardContent>
             <Calendar
@@ -114,7 +113,9 @@ export default function AppointmentsData(props: {
             />
             <div className="mt-6 space-y-2">
               <h3 className="font-medium">
-                {date ? dayjs(date).format("dddd, MMMM D") : "No date selected"}
+                {date
+                  ? dayjs(date).format("dddd, MMMM D")
+                  : t("calendar.no_date")}
               </h3>
               {selectedDateAppointments.length > 0 ? (
                 <div className="space-y-2">
@@ -138,14 +139,14 @@ export default function AppointmentsData(props: {
                             : "destructive"
                         }
                       >
-                        {app.status}
+                        {t(`appointments.status.${app.status}`)}
                       </Badge>
                     </div>
                   ))}
                 </div>
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  No appointments for this date
+                  {t("calendar.no_appointments")}
                 </p>
               )}
             </div>
@@ -156,35 +157,35 @@ export default function AppointmentsData(props: {
           <CardHeader className="pb-3">
             <Tabs defaultValue="upcoming">
               <div className="flex gap-4 flex-col w-full items-start justify-between">
-                <CardTitle>Appointments</CardTitle>
+                <CardTitle>{t("appointments.title")}</CardTitle>
                 <TabsList className="flex w-full">
                   <TabsTrigger
                     onClick={() => setActiveTab("pending")}
                     className="w-full text-xs p-2 md:text-sm"
                     value="pending"
                   >
-                    Pending
+                    {t("appointments.tabs.pending")}
                   </TabsTrigger>
                   <TabsTrigger
                     onClick={() => setActiveTab("upcoming")}
                     className="w-full text-xs p-2 md:text-sm"
                     value="upcoming"
                   >
-                    Upcoming
+                    {t("appointments.tabs.upcoming")}
                   </TabsTrigger>
                   <TabsTrigger
                     onClick={() => setActiveTab("completed")}
                     className="w-full text-xs p-2 md:text-sm"
                     value="completed"
                   >
-                    Completed
+                    {t("appointments.tabs.completed")}
                   </TabsTrigger>
                   <TabsTrigger
                     onClick={() => setActiveTab("cancelled")}
                     className="w-full text-xs p-2 md:text-sm"
                     value="cancelled"
                   >
-                    Cancelled
+                    {t("appointments.tabs.cancelled")}
                   </TabsTrigger>
                 </TabsList>
               </div>
@@ -198,49 +199,57 @@ export default function AppointmentsData(props: {
                     tabs[activeTab].map((app) => (
                       <div
                         key={app.id}
-                        className="flex flex-col space-y-2 p-4 border rounded-lg"
+                        className="flex items-center justify-between p-4 border rounded-lg"
                       >
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <div className="font-medium">
-                              {app.customer.name}
-                            </div>
-                            <div className="text-sm text-muted-foreground">
-                              {app.customer.email}
-                            </div>
-                          </div>
-                          <Badge>{activeTab}</Badge>
-                        </div>
-                        <div className="text-sm">
-                          <span className="font-medium">
+                        <div className="space-y-1">
+                          <div className="font-medium">{app.customer.name}</div>
+                          <div className="text-sm text-muted-foreground">
                             {app.service.name}
-                          </span>
-                          <div>{formatDateTime(app.date!)}</div>
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {formatDateTime(app.date!)}
+                          </div>
                         </div>
-                        <div className="flex flex-col md:flex-row w-full gap-2 pt-4">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => markAsCompleted(app.id)}
+                        <div className="flex items-center gap-2">
+                          {app.status === "pending" && (
+                            <>
+                              <Button
+                                onClick={() => markAsCompleted(app.id)}
+                                size="sm"
+                                className="h-8"
+                              >
+                                <Check className="mr-2 h-4 w-4" />
+                                {t("appointments.actions.mark_completed")}
+                              </Button>
+                              <Button
+                                onClick={() => cancelAppointment(app.id)}
+                                variant="destructive"
+                                size="sm"
+                                className="h-8"
+                              >
+                                <X className="mr-2 h-4 w-4" />
+                                {t("appointments.actions.cancel")}
+                              </Button>
+                            </>
+                          )}
+                          <Badge
+                            variant={
+                              app.status === "upcoming"
+                                ? "default"
+                                : app.status === "completed"
+                                ? "secondary"
+                                : "destructive"
+                            }
                           >
-                            <Check className="h-4 w-4 mr-1" />
-                            Mark Completed
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => cancelAppointment(app.id)}
-                          >
-                            <X className="h-4 w-4 mr-1" />
-                            Cancel
-                          </Button>
+                            {t(`appointments.status.${app.status}`)}
+                          </Badge>
                         </div>
                       </div>
                     ))
                   ) : (
-                    <p className="text-center text-muted-foreground py-4">
-                      No {activeTab} appointments
-                    </p>
+                    <div className="text-center py-10 text-muted-foreground">
+                      {t(`appointments.empty.${activeTab}`)}
+                    </div>
                   )}
                 </TabsContent>
               ))}

@@ -1,0 +1,36 @@
+{
+  "page": {
+    "title": "Клијенти",
+    "subtitle": "Управљајте и прегледајте листу клијената"
+  },
+  "table": {
+    "headers": {
+      "name": "Име",
+      "email": "Имејл",
+      "phone": "Телефон"
+    }
+  },
+  "customer_details": {
+    "title": "Детаљи о клијенту",
+    "tabs": {
+      "info": "Информације",
+      "appointments": "Термини"
+    },
+    "contact_info": {
+      "title": "Контакт информације",
+      "email": "Имејл",
+      "phone": "Телефон"
+    },
+    "notes": {
+      "title": "Белешке",
+      "placeholder": "Додајте белешке о клијенту..."
+    },
+    "appointments": {
+      "title": "Историја термина",
+      "headers": {
+        "date": "Датум",
+        "service": "Услуга"
+      }
+    }
+  }
+}

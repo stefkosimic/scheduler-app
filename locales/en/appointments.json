@@ -1,0 +1,37 @@
+{
+  "page": {
+    "title": "Appointments",
+    "subtitle": "Manage your upcoming and past appointments"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "description": "View your appointments by date",
+    "no_date": "No date selected",
+    "no_appointments": "No appointments for this date"
+  },
+  "appointments": {
+    "title": "Appointments",
+    "tabs": {
+      "pending": "Pending",
+      "upcoming": "Upcoming",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "status": {
+      "pending": "pending",
+      "upcoming": "upcoming",
+      "completed": "completed",
+      "cancelled": "cancelled"
+    },
+    "actions": {
+      "mark_completed": "Mark as completed",
+      "cancel": "Cancel appointment"
+    },
+    "empty": {
+      "pending": "No pending appointments",
+      "upcoming": "No upcoming appointments",
+      "completed": "No completed appointments",
+      "cancelled": "No cancelled appointments"
+    }
+  }
+}

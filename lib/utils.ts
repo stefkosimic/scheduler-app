@@ -1,9 +1,9 @@
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
-import timezone from "dayjs/plugin/timezone";
 import { Tables } from "@/types/db";
+import { clsx, type ClassValue } from "clsx";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
+import { twMerge } from "tailwind-merge";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -28,65 +28,56 @@ export const generateTimeSlots = (
   bookedAppointments: Tables<"appointments">[],
   selectedDate: dayjs.Dayjs
 ): string[] => {
+  if (!workingHours || !settings) return [];
+
   const { start_time, end_time } = workingHours;
   const { duration, buffer, max_per_day } = settings;
-  const userTimezone = "Europe/Belgrade";
 
-  // Parse times with proper timezone handling
-  const parseTime = (timeStr: string, date: dayjs.Dayjs): dayjs.Dayjs => {
-    const [hours, minutes, seconds] = timeStr.split(":").map(Number);
-    return date
-      .tz(userTimezone)
-      .set("hour", hours)
-      .set("minute", minutes)
-      .set("second", seconds);
-  };
+  // Parse start and end times for the selected date
+  const startTime = selectedDate
+    .set("hour", parseInt(start_time.split(":")[0]))
+    .set("minute", parseInt(start_time.split(":")[1]))
+    .set("second", 0);
+  const endTime = selectedDate
+    .set("hour", parseInt(end_time.split(":")[0]))
+    .set("minute", parseInt(end_time.split(":")[1]))
+    .set("second", 0);
 
-  // Format time consistently
-  const formatTime = (date: dayjs.Dayjs): string => {
-    return date.format("HH:mm");
-  };
+  // Get booked slots for the selected date
+  const bookedSlots = bookedAppointments
+    .filter((appointment) => {
+      const appointmentDate = dayjs(appointment.date);
+      return appointmentDate.isSame(selectedDate, "date");
+    })
+    .map((appointment) => {
+      const appointmentDate = dayjs(appointment.date);
+      return {
+        start: appointmentDate.format("HH:mm"),
+        end: appointmentDate.add(duration, "minute").format("HH:mm"),
+      };
+    });
 
-  // Convert booked appointments to time slots with minutes
-  const bookedTimes = new Set<string>();
-  bookedAppointments.forEach((appt) => {
-    const apptDate = dayjs(appt.date).tz(userTimezone);
-    if (apptDate.isSame(selectedDate, "day")) {
-      const formattedTime = formatTime(apptDate);
-      bookedTimes.add(formattedTime);
-    }
-  });
-
-  const startTime = parseTime(start_time, selectedDate);
-  const endTime = parseTime(end_time, selectedDate);
-  let currentTime = startTime;
+  // Generate all possible time slots
   const slots: string[] = [];
+  let currentTime = startTime;
   let count = 0;
 
   while (currentTime.isBefore(endTime) && count < max_per_day) {
-    const slotTime = formatTime(currentTime);
-    const slotStartMinutes = currentTime.hour() * 60 + currentTime.minute();
-    const slotEndMinutes = slotStartMinutes + duration;
+    const slotStart = currentTime.format("HH:mm");
+    const slotEnd = currentTime.add(duration, "minute").format("HH:mm");
 
     // Check if this slot overlaps with any booked appointment
-    let isBooked = false;
+    const isAvailable = !bookedSlots.some((bookedSlot) => {
+      // Check for overlap
+      return (
+        (slotStart >= bookedSlot.start && slotStart < bookedSlot.end) ||
+        (slotEnd > bookedSlot.start && slotEnd <= bookedSlot.end) ||
+        (slotStart <= bookedSlot.start && slotEnd >= bookedSlot.end)
+      );
+    });
 
-    for (const bookedTime of bookedTimes) {
-      const [bookedHours, bookedMinutes] = bookedTime.split(":").map(Number);
-      const bookedTimeMinutes = bookedHours * 60 + bookedMinutes;
-
-      // Check if booked time falls within this slot
-      if (
-        bookedTimeMinutes >= slotStartMinutes &&
-        bookedTimeMinutes < slotEndMinutes
-      ) {
-        isBooked = true;
-        break;
-      }
-    }
-
-    if (!isBooked) {
-      slots.push(slotTime);
+    if (isAvailable && currentTime.add(duration, "minute").isBefore(endTime)) {
+      slots.push(slotStart);
       count++;
     }
 

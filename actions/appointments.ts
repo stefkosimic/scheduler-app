@@ -1,7 +1,9 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+
+import { createClient } from "@/utils/supabase/server";
+
 import { getProfile } from "./auth";
 
 export const getUserAppointments = async () => {

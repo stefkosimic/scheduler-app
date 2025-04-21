@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Home, User, Clock, Calendar, Settings } from "lucide-react";
+
 import { cn } from "@/lib/utils";
 
 const BottomNav = () => {

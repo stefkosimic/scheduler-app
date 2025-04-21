@@ -1,8 +1,9 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
+
+import { createClient } from "@/utils/supabase/server";
 
 // Signup with additional data (full_name)
 export const signUp = async (

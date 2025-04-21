@@ -1,12 +1,15 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/server";
-import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc"; // Import UTC plugin
+// Import UTC plugin
 
 // Extend Dayjs with UTC plugin
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+import { createClient } from "@/utils/supabase/server";
+
 import { getOrAddCustomer } from "./customers";
 
 dayjs.extend(utc);
@@ -19,8 +22,9 @@ export const getBookingData = async (username: string) => {
       "*, services: services(*), availability: availability(*), appointment_settings: appointment_settings(*), appointments: appointments!inner(*)"
     )
     .eq("username", username)
-    .eq("appointments.status", "upcoming")
+    // .eq("appointments.status", "upcoming")
     .single();
+  console.log("data brateee", JSON.stringify(data, null, 2));
 
   return data;
 };

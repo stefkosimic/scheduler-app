@@ -82,10 +82,17 @@ export default function BookingData({
             // @ts-ignore
             provider.appointment_settings[0],
             provider.appointments,
-            dayjs(selectedDate)!
+            dayjs(selectedDate)!,
+            selectedService
+              ? Number(
+                  provider.services.find(
+                    (service) => service.id === selectedService
+                  )?.duration
+                )
+              : undefined
           )
         : [],
-    [selectedDate]
+    [selectedDate, selectedService]
   );
 
   const handleServiceSelect = (serviceId: string) => {

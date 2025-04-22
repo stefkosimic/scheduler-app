@@ -26,12 +26,14 @@ export const generateTimeSlots = (
   workingHours: Tables<"availability">,
   settings: Tables<"appointment_settings">,
   bookedAppointments: Tables<"appointments">[],
-  selectedDate: dayjs.Dayjs
+  selectedDate: dayjs.Dayjs,
+  serviceDuration?: number
 ): string[] => {
   if (!workingHours || !settings) return [];
 
   const { start_time, end_time } = workingHours;
-  const { duration, buffer, max_per_day } = settings;
+  const { buffer, max_per_day } = settings;
+  const duration = serviceDuration || settings.duration;
 
   // Parse start and end times for the selected date
   const startTime = selectedDate

@@ -3,6 +3,8 @@
 import { cookies } from "next/headers";
 import { redirect, RedirectType } from "next/navigation";
 
+import { initialAppointmentSettings, initialAvailability } from "@/lib/helpers";
+
 import { createClient } from "@/utils/supabase/server";
 
 // Signup with additional data (full_name)
@@ -55,7 +57,8 @@ export const signout = async () => {
 export const updateProfile = async (
   companyName: string,
   jobTitle: string,
-  onboarding: boolean
+  onboarding: boolean,
+  username?: string
 ) => {
   const supabase = await createClient(await cookies());
 
@@ -67,16 +70,34 @@ export const updateProfile = async (
 
   const { error } = await supabase
     .from("profiles")
-    .update({ company_name: companyName, job_title: jobTitle })
+    .update({
+      company_name: companyName,
+      job_title: jobTitle,
+      ...(username && { username }),
+    })
     .eq("id", user.id);
+
+  if (error) throw error;
+
+  const { data: availabilityData, error: availabilityError } = await supabase
+    .from("availability")
+    .insert(initialAvailability.map((day) => ({ ...day, user_id: user.id })));
+
+  if (availabilityError) throw availabilityError;
+
+  const { data: appointmentSettingsData, error: appointmentSettingsError } =
+    await supabase
+      .from("appointment_settings")
+      .insert({ ...initialAppointmentSettings, user_id: user.id })
+      .select();
+
+  if (appointmentSettingsError) throw appointmentSettingsError;
 
   if (onboarding) {
     const {
       data: { user },
     } = await supabase.auth.updateUser({ data: { onboarded: true } });
   }
-
-  if (error) throw error;
 };
 
 export const getProfile = async () => {

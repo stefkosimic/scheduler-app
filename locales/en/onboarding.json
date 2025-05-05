@@ -1,0 +1,50 @@
+{
+  "page": {
+    "title": "Complete Your Profile",
+    "subtitle": "Add your company details to continue"
+  },
+  "form": {
+    "company_name": {
+      "label": "Company Name",
+      "placeholder": "Your Company"
+    },
+    "job_title": {
+      "label": "Job Title",
+      "placeholder": "Your Role"
+    },
+    "username": {
+      "label": "Username",
+      "placeholder": "Your username"
+    }
+  },
+  "actions": {
+    "continue": "Continue",
+    "saving": "Saving..."
+  },
+  "steps": {
+    "profile": "Profile",
+    "service": "Add First Service"
+  },
+  "service_form": {
+    "title": "Add Your First Service",
+    "description": "Set up your first service to start scheduling appointments.",
+    "fields": {
+      "name": {
+        "label": "Service Name"
+      },
+      "duration": {
+        "label": "Duration (min)"
+      },
+      "price": {
+        "label": "Price ($)"
+      },
+      "description": {
+        "label": "Description"
+      }
+    },
+    "actions": {
+      "add": "Add Service",
+      "skip": "Skip"
+    }
+  }
+}

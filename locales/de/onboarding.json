@@ -1,0 +1,50 @@
+{
+  "page": {
+    "title": "Profil vervollständigen",
+    "subtitle": "Fügen Sie Ihre Firmendaten hinzu, um fortzufahren"
+  },
+  "form": {
+    "company_name": {
+      "label": "Firmenname",
+      "placeholder": "Ihre Firma"
+    },
+    "job_title": {
+      "label": "Berufsbezeichnung",
+      "placeholder": "Ihre Rolle"
+    },
+    "username": {
+      "label": "Benutzername",
+      "placeholder": "Ihr Benutzername"
+    }
+  },
+  "actions": {
+    "continue": "Weiter",
+    "saving": "Speichern..."
+  },
+  "steps": {
+    "profile": "Profil",
+    "service": "Erste Dienstleistung hinzufügen"
+  },
+  "service_form": {
+    "title": "Fügen Sie Ihre erste Dienstleistung hinzu",
+    "description": "Richten Sie Ihre erste Dienstleistung ein, um mit der Terminplanung zu beginnen.",
+    "fields": {
+      "name": {
+        "label": "Dienstleistungsname"
+      },
+      "duration": {
+        "label": "Dauer (Min)"
+      },
+      "price": {
+        "label": "Preis (€)"
+      },
+      "description": {
+        "label": "Beschreibung"
+      }
+    },
+    "actions": {
+      "add": "Dienstleistung hinzufügen",
+      "skip": "Überspringen"
+    }
+  }
+}

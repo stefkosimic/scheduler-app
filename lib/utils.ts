@@ -102,3 +102,13 @@ export const generateTimeSlots = (
 // );
 
 // console.log("testSlots", testSlots);
+
+// Slugify a string for URLs (e.g., 'Korisnicko Ime' => 'korisnicko-ime')
+export function slugify(str: string): string {
+  return str
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9-]/g, "")
+    .replace(/-+/g, "-");
+}

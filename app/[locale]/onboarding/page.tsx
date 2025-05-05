@@ -18,6 +18,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
+import { slugify } from "@/lib/utils";
+
 export default function OnboardingPage() {
   const { t } = useTranslation("onboarding");
   const router = useRouter();
@@ -30,6 +32,7 @@ export default function OnboardingPage() {
     price: "",
     description: "",
   });
+  const [username, setUsername] = useState("");
 
   const handleOnboarding = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -37,9 +40,9 @@ export default function OnboardingPage() {
     const formData = new FormData(e.currentTarget);
     const companyName = formData.get("company_name") as string;
     const jobTitle = formData.get("job_title") as string;
-    const username = formData.get("username") as string;
+    const usernameValue = slugify(username);
     try {
-      await updateProfile(companyName, jobTitle, true, username);
+      await updateProfile(companyName, jobTitle, true, usernameValue);
       setStep("service");
     } catch (error) {
       console.error("Onboarding error:", error);
@@ -139,8 +142,17 @@ export default function OnboardingPage() {
                     id="username"
                     name="username"
                     placeholder={t("form.username.placeholder")}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                     required
                   />
+                  {username && (
+                    <div className="text-xs text-muted-foreground mt-1">
+                      {`${process.env.NEXT_PUBLIC_URL}/book/${slugify(
+                        username
+                      )}`}
+                    </div>
+                  )}
                 </div>
                 <Button className="w-full" type="submit" disabled={loading}>
                   {loading ? t("actions.saving") : t("actions.continue")}

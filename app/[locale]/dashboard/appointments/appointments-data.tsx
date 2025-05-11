@@ -86,7 +86,7 @@ export default function AppointmentsData(props: {
     }
   };
 
-  // Function to cancel appointment
+  // Cancel appointment
   const cancelAppointment = async (id: string) => {
     try {
       await cancelAppointmentAction(id);

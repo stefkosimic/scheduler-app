@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import type React from "react";
 
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 import { notFound } from "next/navigation";
@@ -45,6 +46,7 @@ export default async function RootLayout({
     "availability",
     "appointments",
     "settings",
+    "onboarding",
   ];
 
   const { resources } = await initTranslations(locale, namespaces);
@@ -63,6 +65,7 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </TranslationsProvider>
       </body>

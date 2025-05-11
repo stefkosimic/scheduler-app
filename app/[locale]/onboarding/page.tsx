@@ -146,13 +146,13 @@ export default function OnboardingPage() {
                     onChange={(e) => setUsername(e.target.value)}
                     required
                   />
-                  {username && (
-                    <div className="text-xs text-muted-foreground mt-1">
+                  {
+                    <div className="text-base text-primary py-4">
                       {`${process.env.NEXT_PUBLIC_URL}/book/${slugify(
                         username
                       )}`}
                     </div>
-                  )}
+                  }
                 </div>
                 <Button className="w-full" type="submit" disabled={loading}>
                   {loading ? t("actions.saving") : t("actions.continue")}

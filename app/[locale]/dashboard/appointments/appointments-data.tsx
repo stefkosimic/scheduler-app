@@ -1,10 +1,15 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import {
+  acceptAppointment,
+  cancelAppointment as cancelAppointmentAction,
+} from "@/actions/appointments";
 import { Tables } from "@/types/db";
 import dayjs from "dayjs";
 import { Check, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Badge } from "@/components/ui/badge";
@@ -66,22 +71,34 @@ export default function AppointmentsData(props: {
     return parseDate(timestamp).format("h:mm A");
   };
 
-  // Function to mark appointment as completed
-  const markAsCompleted = (id: string) => {
-    setAppointments(
-      appointments.map((app) =>
-        app.id === id ? { ...app, status: "completed" } : app
-      )
-    );
+  // Function to accept appointment
+  const accept = async (id: string) => {
+    try {
+      await acceptAppointment(id);
+      setAppointments(
+        appointments.map((app) =>
+          app.id === id ? { ...app, status: "upcoming" } : app
+        )
+      );
+      toast(t("appointments.actions.accept_success"));
+    } catch (error) {
+      toast.error(t("appointments.actions.accept_error"));
+    }
   };
 
   // Function to cancel appointment
-  const cancelAppointment = (id: string) => {
-    setAppointments(
-      appointments.map((app) =>
-        app.id === id ? { ...app, status: "cancelled" } : app
-      )
-    );
+  const cancelAppointment = async (id: string) => {
+    try {
+      await cancelAppointmentAction(id);
+      setAppointments(
+        appointments.map((app) =>
+          app.id === id ? { ...app, status: "cancelled" } : app
+        )
+      );
+      toast(t("appointments.actions.cancel_success"));
+    } catch (error) {
+      toast.error(t("appointments.actions.cancel_error"));
+    }
   };
 
   const tabs: {
@@ -93,12 +110,12 @@ export default function AppointmentsData(props: {
       upcoming: upcomingAppointments,
       cancelled: cancelledAppointments,
     }),
-    [activeTab]
+    [activeTab, appointments]
   );
 
   return (
     <DashboardPageWrapper title={t("page.title")} subtitle={t("page.subtitle")}>
-      <div className="flex gap-6">
+      <div className="flex flex-col md:flex-row gap-6">
         <Card>
           <CardHeader>
             <CardTitle>{t("calendar.title")}</CardTitle>
@@ -214,12 +231,12 @@ export default function AppointmentsData(props: {
                           {app.status === "pending" && (
                             <>
                               <Button
-                                onClick={() => markAsCompleted(app.id)}
+                                onClick={() => accept(app.id)}
                                 size="sm"
                                 className="h-8"
                               >
                                 <Check className="mr-2 h-4 w-4" />
-                                {t("appointments.actions.mark_completed")}
+                                {t("appointments.actions.accept")}
                               </Button>
                               <Button
                                 onClick={() => cancelAppointment(app.id)}

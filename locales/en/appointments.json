@@ -25,7 +25,12 @@
     },
     "actions": {
       "mark_completed": "Mark as completed",
-      "cancel": "Cancel appointment"
+      "accept": "Accept appointment",
+      "accept_success": "Appointment accepted successfully.",
+      "accept_error": "Failed to accept appointment. Please try again.",
+      "cancel": "Cancel appointment",
+      "cancel_success": "Appointment cancelled successfully.",
+      "cancel_error": "Failed to cancel appointment. Please try again."
     },
     "empty": {
       "pending": "No pending appointments",

@@ -5,13 +5,13 @@ import { redirect, RedirectType } from "next/navigation";
 import { Tables } from "@/types/db";
 import dayjs from "dayjs";
 
-import { createClient } from "@/utils/supabase/server";
+import { createAdminClient, createClient } from "@/utils/supabase/server";
 
 export const getOrAddCustomer = async (
   data: any,
   user_id: string
 ): Promise<{ customer: Tables<"customers"> }> => {
-  const supabase = await createClient(await cookies());
+  const supabase = await createAdminClient(await cookies());
 
   let customer;
 
@@ -35,7 +35,9 @@ export const getOrAddCustomer = async (
       .select("*")
       .single();
     console.log("new customer added: ", newCustomer);
-
+    if (error) {
+      throw new Error(error.message);
+    }
     customer = newCustomer;
   }
 

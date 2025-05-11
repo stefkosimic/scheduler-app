@@ -56,7 +56,7 @@ export default function AppSidebar() {
   return (
     <SidebarProvider>
       {/* SidebarTrigger is visible on mobile, hidden on desktop */}
-      <div className="md:hidden p-2">
+      <div className="md:hidden fixed top-4 right-4 p-2">
         <SidebarTrigger />
       </div>
       <Sidebar collapsible="icon" side="left">

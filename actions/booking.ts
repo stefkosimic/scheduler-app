@@ -8,18 +8,18 @@ import { redirect, RedirectType } from "next/navigation";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
-import { createClient } from "@/utils/supabase/server";
+import { createClient, createAdminClient } from "@/utils/supabase/server";
 
 import { getOrAddCustomer } from "./customers";
 
 dayjs.extend(utc);
 
 export const getBookingData = async (username: string) => {
-  const supabase = await createClient(await cookies());
+  const supabase = await createAdminClient(await cookies());
   const { data, error } = await supabase
     .from("profiles")
     .select(
-      "*, services: services(*), availability: availability(*), appointment_settings: appointment_settings(*), appointments: appointments!inner(*)"
+      "*, services: services(*), availability: availability(*), appointment_settings: appointment_settings(*), appointments: appointments(*)"
     )
     .eq("username", username)
     // .eq("appointments.status", "upcoming")

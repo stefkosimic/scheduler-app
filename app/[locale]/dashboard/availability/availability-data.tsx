@@ -26,13 +26,16 @@ import { Switch } from "@/components/ui/switch";
 
 import { DAYS } from "@/lib/utils";
 
+// Example initial data for AvailabilityData
+
 export default function AvailabilityData(props: any) {
   const { t } = useTranslation("availability");
   const [availability, setAvailability] = useState(
-    props.availability.sort(
-      (a: Tables<"availability">, b: Tables<"availability">) =>
-        DAYS.indexOf(a.day) - DAYS.indexOf(b.day)
-    )
+    props.availability.length &&
+      props.availability.sort(
+        (a: Tables<"availability">, b: Tables<"availability">) =>
+          DAYS.indexOf(a.day) - DAYS.indexOf(b.day)
+      )
   );
   const [appointmentSettings, setAppointmentSettings] = useState(
     props.appointment_settings
@@ -57,6 +60,8 @@ export default function AvailabilityData(props: any) {
       )
     );
   };
+
+  console.log(availability);
 
   return (
     <DashboardPageWrapper title={t("page.title")} subtitle={t("page.subtitle")}>

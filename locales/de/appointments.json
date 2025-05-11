@@ -25,7 +25,12 @@
     },
     "actions": {
       "mark_completed": "Als abgeschlossen markieren",
-      "cancel": "Termin stornieren"
+      "accept": "Termin annehmen",
+      "accept_success": "Termin wurde erfolgreich angenommen.",
+      "accept_error": "Termin konnte nicht angenommen werden. Bitte versuchen Sie es erneut.",
+      "cancel": "Termin stornieren",
+      "cancel_success": "Termin wurde erfolgreich storniert.",
+      "cancel_error": "Termin konnte nicht storniert werden. Bitte versuchen Sie es erneut."
     },
     "empty": {
       "pending": "Keine ausstehenden Termine",

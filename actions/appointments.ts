@@ -42,3 +42,29 @@ export const getDashboardData = async () => {
 
   return { profile };
 };
+
+export const acceptAppointment = async (appointmentId: string) => {
+  const supabase = await createClient(await cookies());
+
+  const { error } = await supabase
+    .from("appointments")
+    .update({ status: "upcoming" })
+    .eq("id", appointmentId);
+
+  if (error) throw Error(error.message);
+
+  return { success: true };
+};
+
+export const cancelAppointment = async (appointmentId: string) => {
+  const supabase = await createClient(await cookies());
+
+  const { error } = await supabase
+    .from("appointments")
+    .update({ status: "cancelled" })
+    .eq("id", appointmentId);
+
+  if (error) throw Error(error.message);
+
+  return { success: true };
+};

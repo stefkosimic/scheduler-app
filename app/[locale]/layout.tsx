@@ -49,6 +49,7 @@ export default async function RootLayout({
     "appointments",
     "settings",
     "onboarding",
+    "signup",
   ];
 
   const { resources } = await initTranslations(locale, namespaces);

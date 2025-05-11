@@ -1,0 +1,26 @@
+{
+  "title": "Registrieren",
+  "description": "Erstellen Sie ein Konto, um mit dem Planen zu beginnen",
+  "fullName": {
+    "label": "Vollständiger Name",
+    "placeholder": "Max Mustermann"
+  },
+  "email": {
+    "label": "E-Mail",
+    "placeholder": "ihre.email@beispiel.de"
+  },
+  "password": {
+    "label": "Passwort",
+    "placeholder": "Geben Sie Ihr Passwort ein"
+  },
+  "confirmPassword": {
+    "label": "Passwort bestätigen",
+    "placeholder": "Bestätigen Sie Ihr Passwort"
+  },
+  "error": {
+    "passwordMismatch": "Die Passwörter stimmen nicht überein"
+  },
+  "button": "Registrieren",
+  "alreadyHaveAccount": "Bereits ein Konto?",
+  "login": "Anmelden"
+}

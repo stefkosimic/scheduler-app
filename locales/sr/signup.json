@@ -1,0 +1,26 @@
+{
+  "title": "Регистрација",
+  "description": "Направите налог",
+  "fullName": {
+    "label": "Пуно име",
+    "placeholder": "Јован Јовановић"
+  },
+  "email": {
+    "label": "Е-mail адреса",
+    "placeholder": "ваш.емаил@пример.рс"
+  },
+  "password": {
+    "label": "Лозинка",
+    "placeholder": "Унесите лозинку"
+  },
+  "confirmPassword": {
+    "label": "Потврдите лозинку",
+    "placeholder": "Потврдите лозинку"
+  },
+  "error": {
+    "passwordMismatch": "Лозинке се не поклапају"
+  },
+  "button": "Регистрација",
+  "alreadyHaveAccount": "Већ имате налог?",
+  "login": "Пријави се"
+}

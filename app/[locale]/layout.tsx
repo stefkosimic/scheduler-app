@@ -11,6 +11,8 @@ import { dir } from "i18next";
 
 import TranslationsProvider from "@/components/TranslationsProvider";
 
+import { Providers } from "@/lib/providers";
+
 import initTranslations from "../i18n";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -64,7 +66,7 @@ export default async function RootLayout({
             defaultTheme="light"
             disableTransitionOnChange
           >
-            {children}
+            <Providers>{children}</Providers>
             <Toaster />
           </ThemeProvider>
         </TranslationsProvider>

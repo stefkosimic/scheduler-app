@@ -25,27 +25,33 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
+import { createService, updateService, deleteService } from "@/actions/services";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type ServiceFormData = {
   name: string;
-  duration: string;
-  price: string;
+  duration: number;
+  price: number;
   description: string;
 };
 
 export default function ServicesContent({
-  services,
+  data,
 }: {
-  services: Tables<"services">[];
+  data: Tables<"services">[];
 }) {
   const { t } = useTranslation("services");
+  const router = useRouter();
+  const [services, setServices] = useState<Tables<"services">[]>(data);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [selectedService, setSelectedService] =
     useState<Tables<"services"> | null>(null);
   const [formData, setFormData] = useState<ServiceFormData>({
     name: "",
-    duration: "",
-    price: "",
+    duration: 60,
+    price: 0,
     description: "",
   });
 
@@ -53,8 +59,8 @@ export default function ServicesContent({
     setSelectedService(service);
     setFormData({
       name: service.name,
-      duration: service.duration.toString(),
-      price: service.price.toString(),
+      duration: service.duration,
+      price: service.price,
       description: service.description || "",
     });
     setIsModalOpen(true);
@@ -64,16 +70,50 @@ export default function ServicesContent({
     setSelectedService(null);
     setFormData({
       name: "",
-      duration: "",
-      price: "",
+      duration: 60,
+      price: 0,
       description: "",
     });
     setIsModalOpen(true);
   };
 
-  const handleSubmit = () => {
-    // TODO: Implement service creation/update logic
-    setIsModalOpen(false);
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      if (selectedService) {
+        // Update service
+        const data = await updateService(selectedService.id, formData);
+        setSelectedService(null)
+        setServices((prev) => prev.map((service) => (service.id === selectedService.id ? data : service)));
+        setIsModalOpen(false);
+      } else {
+        // Create new service
+        const data = await createService(formData);
+        setServices((prev) => [...prev, data]);
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      toast.error(t("actions.add_service_error"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteService = async () => {
+    if (!selectedService) return;
+
+    setLoading(true);
+    try {
+      await deleteService(selectedService.id);
+      setServices((prev) => prev.filter((service) => service.id !== selectedService.id));
+      setSelectedService(null);
+      setIsModalOpen(false);
+      toast.success(t("actions.delete_service_success"));
+    } catch (error) {
+      toast.error(t("actions.delete_service_error"));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,7 +121,7 @@ export default function ServicesContent({
       title={t("page.title")}
       subtitle={t("page.subtitle")}
       actions={
-        <Button onClick={handleAddNew}>
+        <Button className="w-full" onClick={handleAddNew}>
           <PlusCircle className="h-4 w-4" />
           {t("actions.add_service")}
         </Button>
@@ -123,7 +163,7 @@ export default function ServicesContent({
               </DialogTitle>
             </DialogHeader>
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">{t("modal.form.name.label")}</Label>
                   <Input
@@ -134,7 +174,7 @@ export default function ServicesContent({
                     }
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <div className="space-y-2">
                     <Label htmlFor="duration">
                       {t("modal.form.duration.label")}
@@ -144,7 +184,7 @@ export default function ServicesContent({
                       type="number"
                       value={formData.duration}
                       onChange={(e) =>
-                        setFormData({ ...formData, duration: e.target.value })
+                        setFormData({ ...formData, duration: Number(e.target.value) })
                       }
                     />
                   </div>
@@ -155,7 +195,7 @@ export default function ServicesContent({
                       type="number"
                       value={formData.price}
                       onChange={(e) =>
-                        setFormData({ ...formData, price: e.target.value })
+                        setFormData({ ...formData, price: Number(e.target.value) })
                       }
                     />
                   </div>
@@ -175,11 +215,21 @@ export default function ServicesContent({
                 />
               </div>
             </div>
-            <DialogFooter>
+            <DialogFooter className="flex flex-col md:flex-row gap-4 justify-between">
+              {selectedService && (
+                <Button
+                  variant="destructive"
+                  type="button"
+                  disabled={loading}
+                  onClick={handleDeleteService}
+                >
+                  {t("actions.delete")}
+                </Button>
+              )}
               <Button variant="outline" onClick={() => setIsModalOpen(false)}>
                 {t("actions.cancel")}
               </Button>
-              <Button onClick={handleSubmit}>
+              <Button loading={loading} onClick={handleSubmit}>
                 {selectedService
                   ? t("actions.save_changes")
                   : t("actions.add_service")}

@@ -6,7 +6,10 @@
   "actions": {
     "add_service": "Dienstleistung hinzufügen",
     "cancel": "Abbrechen",
-    "save_changes": "Änderungen speichern"
+    "save_changes": "Änderungen speichern",
+    "delete": "Löschen",
+    "delete_service_success": "Dienstleistung erfolgreich gelöscht",
+    "delete_service_error": "Fehler beim Löschen der Dienstleistung"
   },
   "table": {
     "headers": {

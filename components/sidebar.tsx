@@ -67,8 +67,8 @@ export default function AppSidebar() {
           <SidebarMenu>
             {navItems.map((item) => (
               <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton asChild>
-                  <Link href={item.href}>
+                <SidebarMenuButton asChild className="py-4">
+                  <Link className="text-lg" href={item.href}>
                     <item.icon className="mr-2 h-4 w-4" />
                     {item.title}
                   </Link>

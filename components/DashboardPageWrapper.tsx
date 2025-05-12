@@ -23,7 +23,7 @@ export default function DashboardPageWrapper({
   return (
     <div className="space-y-6 w-full">
       <Card className="bg-transparent shadow-none border-none">
-        <CardHeader className="p-0 pb-2 flex flex-row items-center justify-between">
+        <CardHeader className="p-0 pb-2 gap-4 flex flex-col md:flex-row items-start md:items-center justify-between">
           <div>
             <CardTitle className="text-3xl font-bold tracking-tight">
               {title}
@@ -34,7 +34,7 @@ export default function DashboardPageWrapper({
               </CardDescription>
             )}
           </div>
-          {actions && <div className="flex items-center gap-2">{actions}</div>}
+          {actions && <div className="flex items-center gap-2 w-full md:w-auto">{actions}</div>}
         </CardHeader>
       </Card>
       {children}

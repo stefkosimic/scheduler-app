@@ -22,5 +22,6 @@
   },
   "button": "Registrieren",
   "alreadyHaveAccount": "Bereits ein Konto?",
-  "login": "Anmelden"
+  "login": "Anmelden",
+  "loading": "Registrieren..."
 }

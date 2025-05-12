@@ -154,7 +154,7 @@ export default function OnboardingPage() {
                     </div>
                   }
                 </div>
-                <Button className="w-full" type="submit" disabled={loading}>
+                <Button loading={loading} className="w-full" type="submit" disabled={loading}>
                   {loading ? t("actions.saving") : t("actions.continue")}
                 </Button>
               </div>
@@ -228,6 +228,7 @@ export default function OnboardingPage() {
                   <Button
                     className="w-full"
                     type="submit"
+                    loading={serviceLoading}
                     disabled={serviceLoading}
                   >
                     {t("service_form.actions.add")}

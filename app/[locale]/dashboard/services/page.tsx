@@ -21,5 +21,5 @@ import ServicesContent from "./services-content";
 
 export default async function ServicesPage() {
   const { services } = (await getServices()) as any;
-  return <ServicesContent services={services} />;
+  return <ServicesContent data={services} />;
 }

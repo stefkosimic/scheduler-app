@@ -17,11 +17,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import LanguageChanger from "@/components/LanguageChanger";
 
 export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation("signup");
+  const router = useRouter();
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,8 +42,10 @@ export default function SignupPage() {
     }
 
     try {
-      const user = await signUp(email, password, fullName);
-      console.log("User signed up:", user);
+      const { redirect } = await signUp(email, password, fullName);
+      if (redirect) {
+        router.push(redirect);
+      }
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -51,6 +55,9 @@ export default function SignupPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-900">
+      <div className="absolute top-4 right-4">
+        <LanguageChanger />
+      </div>
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">{t("title")}</CardTitle>
@@ -100,8 +107,8 @@ export default function SignupPage() {
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
-              <Button type="submit" className="w-full">
-                {t("button")}
+              <Button loading={loading} type="submit" className="w-full">
+                {loading ? t("loading") : t("button")}
               </Button>
             </div>
           </form>

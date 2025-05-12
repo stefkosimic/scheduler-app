@@ -6,7 +6,10 @@
   "actions": {
     "add_service": "Додај услугу",
     "cancel": "Откажи",
-    "save_changes": "Сачувај измене"
+    "save_changes": "Сачувај измене",
+    "delete": "Избриши",
+    "delete_service_success": "Услуга успешно избришана",
+    "delete_service_error": "Грешка приликом изbrisane услуги"
   },
   "table": {
     "headers": {

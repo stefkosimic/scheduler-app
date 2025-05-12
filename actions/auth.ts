@@ -24,7 +24,7 @@ export const signUp = async (
 
   if (error) throw error;
 
-  redirect("/onboarding");
+  return { redirect: "/onboarding" }
 };
 
 // Sign in user
@@ -37,11 +37,12 @@ export const signIn = async (email: string, password: string) => {
   });
 
   if (data.user && !data.user?.user_metadata.onboarded) {
-    return redirect("/onboarding", RedirectType.replace);
+    return { redirect: "/onboarding" }
   }
 
   if (error) throw error;
-  redirect("/dashboard", RedirectType.replace);
+
+  return { redirect: "/dashboard" }
 };
 
 // Logout user

@@ -35,8 +35,11 @@ export default function LoginPage() {
     const password = formData.get("password") as string;
 
     try {
-      await signIn(email, password);
-    } catch (err:any) {
+      const { redirect } = await signIn(email, password);
+      if (redirect) {
+        router.push(redirect);
+      }
+    } catch (err: any) {
       setError(err.message);
     } finally {
       setLoading(false);
@@ -80,8 +83,8 @@ export default function LoginPage() {
                 <Input id="password" name="password" required type="password" />
               </div>
               {error && <p className="text-sm text-red-500">{error}</p>}
-              <Button className="w-full" type="submit">
-                {t("login.login")}
+              <Button loading={loading} className="w-full" type="submit">
+                {loading ? t("login.loading") : t("login.login")}
               </Button>
             </div>
           </form>

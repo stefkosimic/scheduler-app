@@ -6,7 +6,10 @@
   "actions": {
     "add_service": "Add Service",
     "cancel": "Cancel",
-    "save_changes": "Save Changes"
+    "save_changes": "Save Changes",
+    "delete": "Delete",
+    "delete_service_success": "Service deleted successfully",
+    "delete_service_error": "Error deleting service"
   },
   "table": {
     "headers": {

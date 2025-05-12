@@ -143,29 +143,29 @@ export default function DashboardData({ profile }: any) {
             <CardTitle>{t("quick_actions.title")}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2">
-              <Button className="w-full justify-start" asChild>
-                <Link href="/dashboard/profile">
+            <div className="flex flex-col gap-2">
+              <Link href="/dashboard/settings">
+                <Button className="w-full justify-start" asChild>
                   <User className="mr-2 h-4 w-4" />
                   {t("quick_actions.update_profile")}
-                </Link>
-              </Button>
-              <Button className="w-full justify-start" asChild>
-                <Link href="/dashboard/availability">
+                </Button>
+              </Link>
+              <Link href="/dashboard/availability">
+                <Button className="w-full justify-start" asChild>
                   <Clock className="mr-2 h-4 w-4" />
                   {t("quick_actions.set_availability")}
-                </Link>
-              </Button>
-              <Button
-                className="w-full justify-start"
-                variant="outline"
-                asChild
-              >
-                <Link href={`/book/${profile.username}`} target="_blank">
+                </Button>
+              </Link>
+              <Link href={`/book/${profile.username}`} target="_blank">
+                <Button
+                  className="w-full justify-start"
+                  variant="outline"
+                  asChild
+                >
                   <LinkIcon className="mr-2 h-4 w-4" />
                   {t("quick_actions.preview_booking")}
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           </CardContent>
         </Card>

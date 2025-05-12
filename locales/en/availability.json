@@ -10,6 +10,15 @@
     "to": "to",
     "save": "Save Working Hours"
   },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
   "appointment_settings": {
     "title": "Appointment Settings",
     "description": "Configure how your appointments are scheduled",

@@ -10,6 +10,15 @@
     "to": "bis",
     "save": "Arbeitszeiten speichern"
   },
+  "days": {
+    "monday": "Montag",
+    "tuesday": "Dienstag",
+    "wednesday": "Mittwoch",
+    "thursday": "Donnerstag",
+    "friday": "Freitag",
+    "saturday": "Samstag",
+    "sunday": "Sonntag"
+  },
   "appointment_settings": {
     "title": "Termineinstellungen",
     "description": "Konfigurieren Sie, wie Ihre Termine geplant werden",

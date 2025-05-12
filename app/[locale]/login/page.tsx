@@ -65,7 +65,6 @@ export default function LoginPage() {
                 <Input
                   id="email"
                   name="email"
-                  placeholder={t("login.emailPlaceholder")}
                   required
                   type="email"
                 />

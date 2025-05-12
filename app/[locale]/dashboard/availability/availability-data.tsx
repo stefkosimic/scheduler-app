@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Tables } from "@/types/db";
 import { useTranslation } from "react-i18next";
+import { updateAvailabilityRow, updateAppointmentSettings } from "@/actions/availability";
 
 import DashboardPageWrapper from "@/components/DashboardPageWrapper";
 import { Button } from "@/components/ui/button";
@@ -32,19 +33,36 @@ export default function AvailabilityData(props: any) {
   const { t } = useTranslation("availability");
   const [availability, setAvailability] = useState(
     props.availability.length &&
-      props.availability.sort(
-        (a: Tables<"availability">, b: Tables<"availability">) =>
-          DAYS.indexOf(a.day) - DAYS.indexOf(b.day)
-      )
+    props.availability.sort(
+      (a: Tables<"availability">, b: Tables<"availability">) =>
+        DAYS.indexOf(a.day) - DAYS.indexOf(b.day)
+    )
   );
   const [appointmentSettings, setAppointmentSettings] = useState(
     props.appointment_settings
   );
 
+  console.log("appointmentSettings", appointmentSettings);
+
+
+  const updateSettings = async (settings: Partial<Tables<"appointment_settings">>) => {
+    try {
+      const updatedSettings = await updateAppointmentSettings(settings);
+      setAppointmentSettings(updatedSettings);
+    } catch (error) {
+      console.error("Error updating appointment settings:", error);
+    }
+  };
+
   const toggleDayEnabled = (id: string) => {
     setAvailability(
-      availability.map((day: Tables<"availability">) =>
-        day.id === id ? { ...day, enabled: !day.enabled } : day
+      availability.map((d: Tables<"availability">) =>
+        d.id === id
+          ? {
+            ...d,
+            enabled: !d.enabled
+          }
+          : d
       )
     );
   };
@@ -55,13 +73,25 @@ export default function AvailabilityData(props: any) {
     value: string
   ) => {
     setAvailability(
-      availability.map((day: Tables<"availability">) =>
-        day.id === id ? { ...day, [field]: value + ":00" } : day
+      availability.map((d: Tables<"availability">) =>
+        d.id === id
+          ? {
+            ...d,
+            [field]: value + ":00"
+          }
+          : d
       )
     );
   };
 
-  console.log(availability);
+  const updateWeekdays = async () => {
+    try {
+      await updateAvailabilityRow(availability);
+
+    } catch (error) {
+      console.error("Error saving changes:", error);
+    }
+  };
 
   return (
     <DashboardPageWrapper title={t("page.title")} subtitle={t("page.subtitle")}>
@@ -84,7 +114,7 @@ export default function AvailabilityData(props: any) {
                     id={`day-${day.id}`}
                   />
                   <Label htmlFor={`day-${day.id}`} className="">
-                    {day.day}
+                    {t(`days.${day.day.toLowerCase()}`)}
                   </Label>
                 </div>
                 {day.enabled ? (
@@ -116,7 +146,7 @@ export default function AvailabilityData(props: any) {
             ))}
           </CardContent>
           <CardFooter>
-            <Button className="w-full md:w-auto">
+            <Button onClick={() => updateWeekdays()} className="w-full md:w-auto">
               {t("working_hours.save")}
             </Button>
           </CardFooter>
@@ -245,7 +275,7 @@ export default function AvailabilityData(props: any) {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full md:w-auto">Save Settings</Button>
+            <Button onClick={() => updateSettings(appointmentSettings)} className="w-full md:w-auto">Save Settings</Button>
           </CardFooter>
         </Card>
       </div>

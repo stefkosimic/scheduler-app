@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Calendar, Clock, Home, Settings, User } from "lucide-react";
+import { Boxes, Calendar, Clock, Home, Settings, Users2 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const navItems = [
   {
@@ -10,9 +11,14 @@ const navItems = [
     icon: Home,
   },
   {
-    title: "Profile",
-    href: "/dashboard/profile",
-    icon: User,
+    title: "Customers",
+    href: "/dashboard/customers",
+    icon: Users2,
+  },
+  {
+    title: "Services",
+    href: "/dashboard/services",
+    icon: Boxes,
   },
   {
     title: "Availability",
@@ -40,17 +46,11 @@ export default function Nav({ className, buttonClassName }: NavProps) {
   return (
     <nav className={className}>
       {navItems.map((item) => (
-        <Button
+        <Link
           key={item.href}
-          variant="ghost"
-          className={buttonClassName}
-          asChild
-        >
-          <Link href={item.href}>
-            <item.icon className="mr-2 h-4 w-4" />
-            {item.title}
-          </Link>
-        </Button>
+          className={cn(buttonVariants({ variant: "ghost" }))} href={item.href}>
+          <item.icon className="h-5 w-5" />
+        </Link>
       ))}
     </nav>
   );

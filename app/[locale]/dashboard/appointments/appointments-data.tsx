@@ -57,8 +57,8 @@ export default function AppointmentsData(props: {
   const selectedDateAppointments =
     appointments && date
       ? appointments.filter((app) =>
-          parseDate(app.date!).isSame(dayjs(date), "day")
-        )
+        parseDate(app.date!).isSame(dayjs(date), "day")
+      )
       : [];
 
   // Function to format date and time
@@ -115,7 +115,7 @@ export default function AppointmentsData(props: {
 
   return (
     <DashboardPageWrapper title={t("page.title")} subtitle={t("page.subtitle")}>
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         <Card>
           <CardHeader>
             <CardTitle>{t("calendar.title")}</CardTitle>
@@ -152,8 +152,8 @@ export default function AppointmentsData(props: {
                           app.status === "upcoming"
                             ? "default"
                             : app.status === "completed"
-                            ? "secondary"
-                            : "destructive"
+                              ? "secondary"
+                              : "destructive"
                         }
                       >
                         {t(`appointments.status.${app.status}`)}
@@ -216,7 +216,7 @@ export default function AppointmentsData(props: {
                     tabs[activeTab].map((app) => (
                       <div
                         key={app.id}
-                        className="flex items-center justify-between p-4 border rounded-lg"
+                        className="flex flex-col gap-4 p-4 border rounded-lg"
                       >
                         <div className="space-y-1">
                           <div className="font-medium">{app.customer.name}</div>
@@ -236,7 +236,7 @@ export default function AppointmentsData(props: {
                                 className="h-8"
                               >
                                 <Check className="mr-2 h-4 w-4" />
-                                {t("appointments.actions.accept")}
+                                <span className="hidden md:block">{t("appointments.actions.accept")}</span>
                               </Button>
                               <Button
                                 onClick={() => cancelAppointment(app.id)}
@@ -245,7 +245,7 @@ export default function AppointmentsData(props: {
                                 className="h-8"
                               >
                                 <X className="mr-2 h-4 w-4" />
-                                {t("appointments.actions.cancel")}
+                                <span className="hidden md:block">{t("appointments.actions.cancel")}</span>
                               </Button>
                             </>
                           )}
@@ -254,8 +254,8 @@ export default function AppointmentsData(props: {
                               app.status === "upcoming"
                                 ? "default"
                                 : app.status === "completed"
-                                ? "secondary"
-                                : "destructive"
+                                  ? "secondary"
+                                  : "destructive"
                             }
                           >
                             {t(`appointments.status.${app.status}`)}

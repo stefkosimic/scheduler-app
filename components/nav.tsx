@@ -48,8 +48,9 @@ export default function Nav({ className, buttonClassName }: NavProps) {
       {navItems.map((item) => (
         <Link
           key={item.href}
-          className={cn(buttonVariants({ variant: "ghost" }))} href={item.href}>
-          <item.icon className="h-5 w-5" />
+          className="h-5 w-5 p-0 flex items-center justify-center"
+          href={item.href}>
+          <item.icon />
         </Link>
       ))}
     </nav>

@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -39,6 +40,8 @@ export default function SettingsContent({
   // State for forms
 
   const [data, setData] = useState(profile);
+  const [avatar, setAvatar] = useState<File | null>(null);
+  const [coverPhoto, setCoverPhoto] = useState<File | null>(null);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -79,39 +82,96 @@ export default function SettingsContent({
               <CardDescription>{t("personal.description")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="name">{t("personal.fields.full_name")}</Label>
+              <div className="space-y-4">
+                {/* Avatar Upload & Preview */}
+                <div className="space-y-2 flex items-center gap-4">
+                  <Label htmlFor="avatar-upload">{t("personal.fields.avatar") || "Avatar"}</Label>
+                  <Avatar className="h-16 w-16">
+                    {avatar ? (
+                      <AvatarImage src={URL.createObjectURL(avatar)} alt="Avatar Preview" />
+                    ) : data.avatar_url ? (
+                      <AvatarImage src={data.avatar_url} alt="Avatar" />
+                    ) : (
+                      <AvatarFallback>A</AvatarFallback>
+                    )}
+                  </Avatar>
                   <Input
-                    id="name"
-                    value={data.full_name || ""}
-                    onChange={(e) =>
-                      setData({ ...data, full_name: e.target.value })
-                    }
+                    id="avatar-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={e => setAvatar(e.target.files?.[0] || null)}
                   />
+                  <label htmlFor="avatar-upload" className="cursor-pointer px-3 py-1 border rounded bg-muted hover:bg-accent">
+                    {avatar ? t("personal.actions.change_avatar") || "Change" : t("personal.actions.upload_avatar") || "Upload"}
+                  </label>
                 </div>
+                {/* Cover Photo Upload & Preview */}
                 <div className="space-y-2">
-                  <Label htmlFor="title">
-                    {t("personal.fields.job_title")}
-                  </Label>
-                  <Input
-                    id="job_title"
-                    value={data.job_title || ""}
-                    onChange={(e) =>
-                      setData({ ...data, job_title: e.target.value })
-                    }
-                  />
+                  <Label htmlFor="cover-photo-upload">{t("personal.fields.cover_photo") || "Cover Photo"}</Label>
+                  <div className="w-full max-w-xl aspect-[3/1] bg-muted border rounded-lg flex items-center justify-center overflow-hidden relative">
+                    {coverPhoto ? (
+                      <img
+                        src={URL.createObjectURL(coverPhoto)}
+                        alt="Cover Preview"
+                        className="object-cover w-full h-full"
+                      />
+                    ) : data.cover_photo ? (
+                      <img
+                        src={data.cover_photo}
+                        alt="Cover"
+                        className="object-cover w-full h-full"
+                      />
+                    ) : (
+                      <span className="text-muted-foreground">No cover photo</span>
+                    )}
+                    <Input
+                      id="cover-photo-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={e => setCoverPhoto(e.target.files?.[0] || null)}
+                    />
+                    <label htmlFor="cover-photo-upload" className="absolute bottom-2 right-2 cursor-pointer px-3 py-1 border rounded bg-muted hover:bg-accent text-xs">
+                      {coverPhoto ? t("personal.actions.change_cover") || "Change" : t("personal.actions.upload_cover") || "Upload"}
+                    </label>
+                  </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">{t("personal.fields.email")}</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={data.email}
-                    onChange={(e) =>
-                      setData({ ...data, email: e.target.value })
-                    }
-                  />
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+
+                  <div className="space-y-2">
+                    <Label htmlFor="name">{t("personal.fields.full_name")}</Label>
+                    <Input
+                      id="name"
+                      value={data.full_name || ""}
+                      onChange={(e) =>
+                        setData({ ...data, full_name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="title">
+                      {t("personal.fields.job_title")}
+                    </Label>
+                    <Input
+                      id="job_title"
+                      value={data.job_title || ""}
+                      onChange={(e) =>
+                        setData({ ...data, job_title: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">{t("personal.fields.email")}</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={data.email}
+                      onChange={(e) =>
+                        setData({ ...data, email: e.target.value })
+                      }
+                    />
+                  </div>
                 </div>
               </div>
               <div className="space-y-2">

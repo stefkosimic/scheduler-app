@@ -11,6 +11,8 @@
     "title": "Grundlegende Informationen",
     "description": "Aktualisieren Sie Ihre persönlichen und Kontaktinformationen",
     "fields": {
+      "avatar": "Profilbild",
+      "cover_photo": "Titelbild",
       "full_name": "Vollständiger Name",
       "job_title": "Berufsbezeichnung",
       "email": "E-Mail",
@@ -18,7 +20,11 @@
       "bio": "Biografie"
     },
     "actions": {
-      "save": "Änderungen speichern"
+      "save": "Änderungen speichern",
+      "upload_avatar": "Hochladen",
+      "change_avatar": "Ändern",
+      "upload_cover": "Titelbild hochladen",
+      "change_cover": "Titelbild ändern"
     }
   },
   "security": {

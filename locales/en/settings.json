@@ -11,6 +11,8 @@
     "title": "Basic Information",
     "description": "Update your personal and contact information",
     "fields": {
+      "avatar": "Profile Picture",
+      "cover_photo": "Cover Photo",
       "full_name": "Full Name",
       "job_title": "Professional Title",
       "email": "Email",
@@ -18,7 +20,11 @@
       "bio": "Bio"
     },
     "actions": {
-      "save": "Save Changes"
+      "save": "Save Changes",
+      "upload_avatar": "Upload",
+      "change_avatar": "Change",
+      "upload_cover": "Upload Cover",
+      "change_cover": "Change Cover"
     }
   },
   "security": {

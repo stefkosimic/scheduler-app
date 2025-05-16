@@ -101,6 +101,7 @@ export type Database = {
           day: string
           enabled: boolean
           end_time: string
+          excluded_hours: Json | null
           id: string
           start_time: string
           user_id: string | null
@@ -109,6 +110,7 @@ export type Database = {
           day: string
           enabled?: boolean
           end_time: string
+          excluded_hours?: Json | null
           id?: string
           start_time: string
           user_id?: string | null
@@ -117,6 +119,7 @@ export type Database = {
           day?: string
           enabled?: boolean
           end_time?: string
+          excluded_hours?: Json | null
           id?: string
           start_time?: string
           user_id?: string | null
@@ -162,6 +165,50 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "customers_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      media_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          full_path: string | null
+          id: string
+          thumbnail_url: string | null
+          title: string
+          type: string
+          url: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          full_path?: string | null
+          id?: string
+          thumbnail_url?: string | null
+          title: string
+          type: string
+          url: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          full_path?: string | null
+          id?: string
+          thumbnail_url?: string | null
+          title?: string
+          type?: string
+          url?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "media_items_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"

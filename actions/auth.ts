@@ -162,3 +162,4 @@ export const getAvailabilitySettings = async () => {
 
   return { profile };
 };
+

@@ -75,22 +75,22 @@ export default function BookingData({
     () =>
       provider && selectedDate
         ? generateTimeSlots(
-            // @ts-ignore
-            provider.availability.find(
-              (a: any) => a.day === dayjs(selectedDate).format("dddd")
-            ),
-            // @ts-ignore
-            provider.appointment_settings[0],
-            provider.appointments,
-            dayjs(selectedDate)!,
-            selectedService
-              ? Number(
-                  provider.services.find(
-                    (service) => service.id === selectedService
-                  )?.duration
-                )
-              : undefined
-          )
+          // @ts-ignore
+          provider.availability.find(
+            (a: any) => a.day === dayjs(selectedDate).format("dddd")
+          ),
+          // @ts-ignore
+          provider.appointment_settings[0],
+          provider.appointments,
+          dayjs(selectedDate)!,
+          selectedService
+            ? Number(
+              provider.services.find(
+                (service) => service.id === selectedService
+              )?.duration
+            )
+            : undefined
+        )
         : [],
     [selectedDate, selectedService]
   );
@@ -173,8 +173,45 @@ export default function BookingData({
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
+    // <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pb-12 px-0">
+      {/* Modern Header with Cover and Avatar */}
+      <div className="relative w-full max-w-4xl mx-auto mb-10">
+        {/* Cover Image */}
+        <div className="h-48 md:h-64 w-full rounded-b-3xl overflow-hidden bg-gray-200 dark:bg-gray-800">
+          <img
+            src={"/cover-placeholder.jpg"}
+            alt="Cover"
+            className="object-cover w-full h-full"
+            style={{ minHeight: '12rem', minWidth: '100%' }}
+          />
+        </div>
+        {/* Avatar & Info */}
+        <div className="absolute left-6 md:left-12 -bottom-12 flex items-end gap-6">
+          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white dark:border-gray-900 bg-gray-100 overflow-hidden shadow-lg">
+            <img
+              src={provider.avatar_url || "/avatar-placeholder.png"}
+              alt="Avatar"
+              className="object-cover w-full h-full"
+            />
+          </div>
+          <div className="pb-4">
+            <div className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
+              {provider.full_name || "Provider Name"}
+            </div>
+            <div className="text-md md:text-lg text-gray-600 dark:text-gray-300 font-medium">
+              {provider.job_title || "Professional Title"}
+            </div>
+            <div className="mt-2 text-gray-500 dark:text-gray-400 max-w-md line-clamp-2">
+              {provider.bio || "Short description about the provider goes here."}
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Spacer for avatar overlap */}
+      <div className="h-16 md:h-20" />
+      <div className="max-w-4xl mx-auto px-4">
+
         {!bookingComplete ? (
           <div className="grid gap-6 md:grid-cols-5">
             <Card className="md:col-span-2">

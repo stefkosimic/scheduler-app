@@ -6,6 +6,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+import { SidebarTrigger } from "./ui/sidebar";
 
 interface DashboardPageWrapperProps {
   title: string;

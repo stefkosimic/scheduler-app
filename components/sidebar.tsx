@@ -15,6 +15,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
+  SidebarHeader,
 } from "@/components/ui/sidebar";
 
 export default function AppSidebar() {
@@ -55,15 +56,13 @@ export default function AppSidebar() {
 
   return (
     <SidebarProvider>
-      {/* SidebarTrigger is visible on mobile, hidden on desktop */}
-      <div className="md:hidden fixed top-4 right-4 p-2">
-        {/* <SidebarTrigger /> */}
-      </div>
       <Sidebar collapsible="icon" side="left">
-        <SidebarContent className="p-2">
-          <Link href="/dashboard" className="p-2 flex items-center space-x-2">
-            <span className="font-bold">{t("app_name")}</span>
-          </Link>
+        <SidebarContent className="p-4 relative">
+          <SidebarHeader className="data-[state=collapsed]:hidden">
+            <Link href="/dashboard" className="flex items-center space-x-2">
+              <span className="font-bold">{t("app_name")}</span>
+            </Link>
+          </SidebarHeader>
           <SidebarMenu>
             {navItems.map((item) => (
               <SidebarMenuItem key={item.href}>
@@ -79,8 +78,9 @@ export default function AppSidebar() {
         </SidebarContent>
         <SidebarSeparator />
         <SidebarFooter>
-          <div className="flex justify-center">
+          <div className="flex justify-between p-2">
             <UserDropdown />
+            <SidebarTrigger />
           </div>
         </SidebarFooter>
       </Sidebar>

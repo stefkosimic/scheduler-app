@@ -218,9 +218,10 @@ export type Database = {
       }
       profiles: {
         Row: {
-          avatar_url: string | null
+          avatar_photo: string | null
           bio: string | null
           company_name: string | null
+          cover_photo: string | null
           email: string
           full_name: string | null
           id: string
@@ -230,9 +231,10 @@ export type Database = {
           website: string | null
         }
         Insert: {
-          avatar_url?: string | null
+          avatar_photo?: string | null
           bio?: string | null
           company_name?: string | null
+          cover_photo?: string | null
           email: string
           full_name?: string | null
           id: string
@@ -242,9 +244,10 @@ export type Database = {
           website?: string | null
         }
         Update: {
-          avatar_url?: string | null
+          avatar_photo?: string | null
           bio?: string | null
           company_name?: string | null
+          cover_photo?: string | null
           email?: string
           full_name?: string | null
           id?: string
@@ -253,7 +256,22 @@ export type Database = {
           username?: string | null
           website?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_avatar_photo_fkey"
+            columns: ["avatar_photo"]
+            isOneToOne: false
+            referencedRelation: "media_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_cover_photo_fkey"
+            columns: ["cover_photo"]
+            isOneToOne: false
+            referencedRelation: "media_items"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       services: {
         Row: {

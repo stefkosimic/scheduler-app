@@ -83,12 +83,29 @@ CREATE TYPE "public"."appointments_status" AS ENUM (
 ALTER TYPE "public"."appointments_status" OWNER TO "postgres";
 
 
+CREATE OR REPLACE FUNCTION "public"."delete_media_from_storage"() RETURNS "trigger"
+    LANGUAGE "plpgsql" SECURITY DEFINER
+    AS $$
+begin
+  -- Delete the file from storage using the full_path
+  if OLD.full_path is not null then
+    delete from storage.objects
+    where bucket_id = 'media' and name = OLD.full_path;
+  end if;
+  return OLD;
+end;
+$$;
+
+
+ALTER FUNCTION "public"."delete_media_from_storage"() OWNER TO "postgres";
+
+
 CREATE OR REPLACE FUNCTION "public"."handle_new_user"() RETURNS "trigger"
     LANGUAGE "plpgsql" SECURITY DEFINER
     SET "search_path" TO ''
     AS $$begin
-  insert into public.profiles (id, email, full_name, avatar_url)
-  values (new.id, new.email, new.raw_user_meta_data->>'full_name', new.raw_user_meta_data->>'avatar_url');
+  insert into public.profiles (id, email, full_name)
+  values (new.id, new.email, new.raw_user_meta_data->>'full_name');
   return new;
 end;$$;
 
@@ -138,6 +155,7 @@ CREATE TABLE IF NOT EXISTS "public"."availability" (
     "start_time" time without time zone NOT NULL,
     "end_time" time without time zone NOT NULL,
     "user_id" "uuid" DEFAULT "auth"."uid"(),
+    "excluded_hours" "json",
     CONSTRAINT "availability_day_check" CHECK ((("day")::"text" = ANY (ARRAY[('Monday'::character varying)::"text", ('Tuesday'::character varying)::"text", ('Wednesday'::character varying)::"text", ('Thursday'::character varying)::"text", ('Friday'::character varying)::"text", ('Saturday'::character varying)::"text", ('Sunday'::character varying)::"text"])))
 );
 
@@ -159,17 +177,35 @@ CREATE TABLE IF NOT EXISTS "public"."customers" (
 ALTER TABLE "public"."customers" OWNER TO "postgres";
 
 
+CREATE TABLE IF NOT EXISTS "public"."media_items" (
+    "id" "uuid" DEFAULT "extensions"."uuid_generate_v4"() NOT NULL,
+    "created_at" timestamp with time zone DEFAULT "now"() NOT NULL,
+    "title" "text" NOT NULL,
+    "description" "text",
+    "type" "text" NOT NULL,
+    "url" "text" NOT NULL,
+    "full_path" "text",
+    "thumbnail_url" "text",
+    "user_id" "uuid",
+    CONSTRAINT "media_items_type_check" CHECK (("type" = ANY (ARRAY['image'::"text", 'video'::"text", 'audio'::"text"])))
+);
+
+
+ALTER TABLE "public"."media_items" OWNER TO "postgres";
+
+
 CREATE TABLE IF NOT EXISTS "public"."profiles" (
     "id" "uuid" NOT NULL,
     "updated_at" timestamp with time zone,
     "username" "text",
     "full_name" "text",
-    "avatar_url" "text",
     "website" "text",
     "email" "text" NOT NULL,
     "company_name" "text",
     "job_title" "text",
     "bio" "text",
+    "avatar_photo" "uuid",
+    "cover_photo" "uuid",
     CONSTRAINT "username_length" CHECK (("char_length"("username") >= 3))
 );
 
@@ -213,12 +249,12 @@ ALTER TABLE ONLY "public"."customers"
 
 
 ALTER TABLE ONLY "public"."customers"
-    ADD CONSTRAINT "customers_phone_key" UNIQUE ("phone");
-
-
-
-ALTER TABLE ONLY "public"."customers"
     ADD CONSTRAINT "customers_pkey" PRIMARY KEY ("id");
+
+
+
+ALTER TABLE ONLY "public"."media_items"
+    ADD CONSTRAINT "media_items_pkey" PRIMARY KEY ("id");
 
 
 
@@ -239,6 +275,10 @@ ALTER TABLE ONLY "public"."profiles"
 
 ALTER TABLE ONLY "public"."services"
     ADD CONSTRAINT "services_pkey" PRIMARY KEY ("id");
+
+
+
+CREATE OR REPLACE TRIGGER "tr_delete_media_from_storage" BEFORE DELETE ON "public"."media_items" FOR EACH ROW EXECUTE FUNCTION "public"."delete_media_from_storage"();
 
 
 
@@ -272,6 +312,21 @@ ALTER TABLE ONLY "public"."customers"
 
 
 
+ALTER TABLE ONLY "public"."media_items"
+    ADD CONSTRAINT "media_items_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY "public"."profiles"
+    ADD CONSTRAINT "profiles_avatar_photo_fkey" FOREIGN KEY ("avatar_photo") REFERENCES "public"."media_items"("id") ON DELETE SET NULL;
+
+
+
+ALTER TABLE ONLY "public"."profiles"
+    ADD CONSTRAINT "profiles_cover_photo_fkey" FOREIGN KEY ("cover_photo") REFERENCES "public"."media_items"("id") ON DELETE SET NULL;
+
+
+
 ALTER TABLE ONLY "public"."profiles"
     ADD CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE CASCADE;
 
@@ -279,6 +334,50 @@ ALTER TABLE ONLY "public"."profiles"
 
 ALTER TABLE ONLY "public"."services"
     ADD CONSTRAINT "services_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."profiles"("id") ON DELETE CASCADE;
+
+
+
+CREATE POLICY "Enable insert access for all users" ON "public"."appointments" FOR INSERT WITH CHECK (true);
+
+
+
+CREATE POLICY "Enable insert access for all users" ON "public"."customers" FOR INSERT WITH CHECK (true);
+
+
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."appointment_settings" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable insert for users based on user_id" ON "public"."availability" FOR INSERT WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."appointment_settings" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."appointments" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."availability" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable read access for all users" ON "public"."customers" FOR SELECT USING (true);
+
+
+
+CREATE POLICY "Enable update based on user_id" ON "public"."availability" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "user_id")) WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable update for users based on user_id" ON "public"."appointment_settings" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "user_id")) WITH CHECK ((( SELECT "auth"."uid"() AS "uid") = "user_id"));
+
+
+
+CREATE POLICY "Enable update for users based on user_id" ON "public"."appointments" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "user_id")) WITH CHECK (true);
 
 
 
@@ -292,6 +391,18 @@ CREATE POLICY "Users can insert their own profile." ON "public"."profiles" FOR I
 
 CREATE POLICY "Users can update own profile." ON "public"."profiles" FOR UPDATE USING ((( SELECT "auth"."uid"() AS "uid") = "id"));
 
+
+
+ALTER TABLE "public"."appointment_settings" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."appointments" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."availability" ENABLE ROW LEVEL SECURITY;
+
+
+ALTER TABLE "public"."customers" ENABLE ROW LEVEL SECURITY;
 
 
 ALTER TABLE "public"."profiles" ENABLE ROW LEVEL SECURITY;
@@ -495,6 +606,12 @@ GRANT USAGE ON SCHEMA "public" TO "service_role";
 
 
 
+GRANT ALL ON FUNCTION "public"."delete_media_from_storage"() TO "anon";
+GRANT ALL ON FUNCTION "public"."delete_media_from_storage"() TO "authenticated";
+GRANT ALL ON FUNCTION "public"."delete_media_from_storage"() TO "service_role";
+
+
+
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "anon";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "authenticated";
 GRANT ALL ON FUNCTION "public"."handle_new_user"() TO "service_role";
@@ -546,6 +663,12 @@ GRANT ALL ON TABLE "public"."availability" TO "service_role";
 GRANT ALL ON TABLE "public"."customers" TO "anon";
 GRANT ALL ON TABLE "public"."customers" TO "authenticated";
 GRANT ALL ON TABLE "public"."customers" TO "service_role";
+
+
+
+GRANT ALL ON TABLE "public"."media_items" TO "anon";
+GRANT ALL ON TABLE "public"."media_items" TO "authenticated";
+GRANT ALL ON TABLE "public"."media_items" TO "service_role";
 
 
 

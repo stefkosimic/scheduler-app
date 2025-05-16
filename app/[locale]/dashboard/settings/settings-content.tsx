@@ -89,8 +89,8 @@ export default function SettingsContent({
                   <Avatar className="h-16 w-16">
                     {avatar ? (
                       <AvatarImage src={URL.createObjectURL(avatar)} alt="Avatar Preview" />
-                    ) : data.avatar_url ? (
-                      <AvatarImage src={data.avatar_url} alt="Avatar" />
+                    ) : data.avatar_photo ? (
+                      <AvatarImage src={data.avatar_photo} alt="Avatar" />
                     ) : (
                       <AvatarFallback>A</AvatarFallback>
                     )}
